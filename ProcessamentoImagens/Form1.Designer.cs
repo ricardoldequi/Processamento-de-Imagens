@@ -53,6 +53,15 @@
             this.btCortarImagem = new System.Windows.Forms.Button();
             this.btConcatenarImagens = new System.Windows.Forms.Button();
             this.btEscalaCinza = new System.Windows.Forms.Button();
+            this.numLimiar = new System.Windows.Forms.NumericUpDown();
+            this.btRgbBinario = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.btlupOUT = new System.Windows.Forms.Button();
+            this.btlupIN = new System.Windows.Forms.Button();
+            this.numOperacao = new System.Windows.Forms.NumericUpDown();
+            this.rbValorFixo = new System.Windows.Forms.RadioButton();
+            this.rbPelaImagem = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -60,11 +69,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.numValorY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLarguraRecorte)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAlturaRecorte)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numLimiar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numOperacao)).BeginInit();
             this.SuspendLayout();
             // 
             // CarregaImagem1
             // 
-            this.CarregaImagem1.Location = new System.Drawing.Point(12, 176);
+            this.CarregaImagem1.Location = new System.Drawing.Point(22, 176);
             this.CarregaImagem1.Name = "CarregaImagem1";
             this.CarregaImagem1.Size = new System.Drawing.Size(107, 23);
             this.CarregaImagem1.TabIndex = 0;
@@ -75,7 +86,7 @@
             // pictureBox1
             // 
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 29);
+            this.pictureBox1.Location = new System.Drawing.Point(22, 29);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(155, 141);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -85,7 +96,7 @@
             // pictureBox2
             // 
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox2.Location = new System.Drawing.Point(247, 29);
+            this.pictureBox2.Location = new System.Drawing.Point(317, 29);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(155, 141);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -95,7 +106,7 @@
             // pictureBox3
             // 
             this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox3.Location = new System.Drawing.Point(633, 29);
+            this.pictureBox3.Location = new System.Drawing.Point(831, 16);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(155, 141);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -105,7 +116,7 @@
             // imagemResult
             // 
             this.imagemResult.AutoSize = true;
-            this.imagemResult.Location = new System.Drawing.Point(630, 13);
+            this.imagemResult.Location = new System.Drawing.Point(828, 0);
             this.imagemResult.Name = "imagemResult";
             this.imagemResult.Size = new System.Drawing.Size(76, 13);
             this.imagemResult.TabIndex = 4;
@@ -114,7 +125,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(244, 13);
+            this.label1.Location = new System.Drawing.Point(314, 13);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(52, 13);
             this.label1.TabIndex = 5;
@@ -123,7 +134,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 13);
+            this.label2.Location = new System.Drawing.Point(19, 13);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(52, 13);
             this.label2.TabIndex = 6;
@@ -131,7 +142,7 @@
             // 
             // carregarImagem2
             // 
-            this.carregarImagem2.Location = new System.Drawing.Point(247, 176);
+            this.carregarImagem2.Location = new System.Drawing.Point(317, 176);
             this.carregarImagem2.Name = "carregarImagem2";
             this.carregarImagem2.Size = new System.Drawing.Size(107, 23);
             this.carregarImagem2.TabIndex = 7;
@@ -141,7 +152,7 @@
             // 
             // Negativa
             // 
-            this.Negativa.Location = new System.Drawing.Point(12, 267);
+            this.Negativa.Location = new System.Drawing.Point(22, 267);
             this.Negativa.Name = "Negativa";
             this.Negativa.Size = new System.Drawing.Size(120, 23);
             this.Negativa.TabIndex = 8;
@@ -151,7 +162,8 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(633, 206);
+            this.textBox1.Enabled = false;
+            this.textBox1.Location = new System.Drawing.Point(831, 193);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(155, 232);
@@ -159,7 +171,7 @@
             // 
             // Array
             // 
-            this.Array.Location = new System.Drawing.Point(12, 296);
+            this.Array.Location = new System.Drawing.Point(22, 296);
             this.Array.Name = "Array";
             this.Array.Size = new System.Drawing.Size(120, 23);
             this.Array.TabIndex = 10;
@@ -169,7 +181,7 @@
             // 
             // btAdicao
             // 
-            this.btAdicao.Location = new System.Drawing.Point(439, 29);
+            this.btAdicao.Location = new System.Drawing.Point(682, 10);
             this.btAdicao.Name = "btAdicao";
             this.btAdicao.Size = new System.Drawing.Size(75, 23);
             this.btAdicao.TabIndex = 11;
@@ -179,7 +191,7 @@
             // 
             // btSubtracao
             // 
-            this.btSubtracao.Location = new System.Drawing.Point(439, 58);
+            this.btSubtracao.Location = new System.Drawing.Point(682, 39);
             this.btSubtracao.Name = "btSubtracao";
             this.btSubtracao.Size = new System.Drawing.Size(75, 23);
             this.btSubtracao.TabIndex = 12;
@@ -189,7 +201,7 @@
             // 
             // btSalvarImagem
             // 
-            this.btSalvarImagem.Location = new System.Drawing.Point(658, 176);
+            this.btSalvarImagem.Location = new System.Drawing.Point(856, 163);
             this.btSalvarImagem.Name = "btSalvarImagem";
             this.btSalvarImagem.Size = new System.Drawing.Size(107, 23);
             this.btSalvarImagem.TabIndex = 13;
@@ -199,7 +211,7 @@
             // 
             // numValorX
             // 
-            this.numValorX.Location = new System.Drawing.Point(470, 130);
+            this.numValorX.Location = new System.Drawing.Point(697, 244);
             this.numValorX.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -211,7 +223,7 @@
             // 
             // numValorY
             // 
-            this.numValorY.Location = new System.Drawing.Point(470, 156);
+            this.numValorY.Location = new System.Drawing.Point(697, 270);
             this.numValorY.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -223,7 +235,7 @@
             // 
             // numLarguraRecorte
             // 
-            this.numLarguraRecorte.Location = new System.Drawing.Point(470, 199);
+            this.numLarguraRecorte.Location = new System.Drawing.Point(697, 313);
             this.numLarguraRecorte.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -235,7 +247,7 @@
             // 
             // numAlturaRecorte
             // 
-            this.numAlturaRecorte.Location = new System.Drawing.Point(470, 225);
+            this.numAlturaRecorte.Location = new System.Drawing.Point(697, 339);
             this.numAlturaRecorte.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -248,7 +260,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(408, 132);
+            this.label3.Location = new System.Drawing.Point(635, 246);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(56, 13);
             this.label3.TabIndex = 18;
@@ -257,7 +269,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(408, 156);
+            this.label4.Location = new System.Drawing.Point(635, 270);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(56, 13);
             this.label4.TabIndex = 19;
@@ -266,7 +278,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(365, 201);
+            this.label5.Location = new System.Drawing.Point(592, 315);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(99, 13);
             this.label5.TabIndex = 20;
@@ -275,7 +287,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(374, 227);
+            this.label6.Location = new System.Drawing.Point(601, 341);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(90, 13);
             this.label6.TabIndex = 21;
@@ -283,7 +295,7 @@
             // 
             // btCortarImagem
             // 
-            this.btCortarImagem.Location = new System.Drawing.Point(470, 251);
+            this.btCortarImagem.Location = new System.Drawing.Point(650, 382);
             this.btCortarImagem.Name = "btCortarImagem";
             this.btCortarImagem.Size = new System.Drawing.Size(107, 23);
             this.btCortarImagem.TabIndex = 22;
@@ -293,7 +305,7 @@
             // 
             // btConcatenarImagens
             // 
-            this.btConcatenarImagens.Location = new System.Drawing.Point(12, 325);
+            this.btConcatenarImagens.Location = new System.Drawing.Point(22, 325);
             this.btConcatenarImagens.Name = "btConcatenarImagens";
             this.btConcatenarImagens.Size = new System.Drawing.Size(120, 23);
             this.btConcatenarImagens.TabIndex = 23;
@@ -303,7 +315,7 @@
             // 
             // btEscalaCinza
             // 
-            this.btEscalaCinza.Location = new System.Drawing.Point(12, 238);
+            this.btEscalaCinza.Location = new System.Drawing.Point(22, 238);
             this.btEscalaCinza.Name = "btEscalaCinza";
             this.btEscalaCinza.Size = new System.Drawing.Size(120, 23);
             this.btEscalaCinza.TabIndex = 24;
@@ -311,11 +323,114 @@
             this.btEscalaCinza.UseVisualStyleBackColor = true;
             this.btEscalaCinza.Click += new System.EventHandler(this.btEscalaCinza_Click);
             // 
+            // numLimiar
+            // 
+            this.numLimiar.Location = new System.Drawing.Point(148, 354);
+            this.numLimiar.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.numLimiar.Name = "numLimiar";
+            this.numLimiar.Size = new System.Drawing.Size(51, 20);
+            this.numLimiar.TabIndex = 25;
+            // 
+            // btRgbBinario
+            // 
+            this.btRgbBinario.Location = new System.Drawing.Point(22, 354);
+            this.btRgbBinario.Name = "btRgbBinario";
+            this.btRgbBinario.Size = new System.Drawing.Size(120, 23);
+            this.btRgbBinario.TabIndex = 26;
+            this.btRgbBinario.Text = "rgb -> binario";
+            this.btRgbBinario.UseVisualStyleBackColor = true;
+            this.btRgbBinario.Click += new System.EventHandler(this.btRgbBinario_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(10, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(35, 13);
+            this.label7.TabIndex = 27;
+            this.label7.Text = "label7";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(205, 356);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(127, 13);
+            this.label8.TabIndex = 28;
+            this.label8.Text = "Digite o valor da mediana";
+            // 
+            // btlupOUT
+            // 
+            this.btlupOUT.Location = new System.Drawing.Point(682, 104);
+            this.btlupOUT.Name = "btlupOUT";
+            this.btlupOUT.Size = new System.Drawing.Size(75, 23);
+            this.btlupOUT.TabIndex = 30;
+            this.btlupOUT.Text = "LupOUT";
+            this.btlupOUT.UseVisualStyleBackColor = true;
+            this.btlupOUT.Click += new System.EventHandler(this.btlupOUT_Click);
+            // 
+            // btlupIN
+            // 
+            this.btlupIN.Location = new System.Drawing.Point(682, 133);
+            this.btlupIN.Name = "btlupIN";
+            this.btlupIN.Size = new System.Drawing.Size(75, 23);
+            this.btlupIN.TabIndex = 31;
+            this.btlupIN.Text = "LupIN";
+            this.btlupIN.UseVisualStyleBackColor = true;
+            this.btlupIN.Click += new System.EventHandler(this.btlupIN_Click);
+            // 
+            // numOperacao
+            // 
+            this.numOperacao.Location = new System.Drawing.Point(625, 39);
+            this.numOperacao.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.numOperacao.Name = "numOperacao";
+            this.numOperacao.Size = new System.Drawing.Size(51, 20);
+            this.numOperacao.TabIndex = 32;
+            // 
+            // rbValorFixo
+            // 
+            this.rbValorFixo.AutoSize = true;
+            this.rbValorFixo.Location = new System.Drawing.Point(547, 39);
+            this.rbValorFixo.Name = "rbValorFixo";
+            this.rbValorFixo.Size = new System.Drawing.Size(71, 17);
+            this.rbValorFixo.TabIndex = 33;
+            this.rbValorFixo.TabStop = true;
+            this.rbValorFixo.Text = "Valor Fixo";
+            this.rbValorFixo.UseVisualStyleBackColor = true;
+            // 
+            // rbPelaImagem
+            // 
+            this.rbPelaImagem.AutoSize = true;
+            this.rbPelaImagem.Location = new System.Drawing.Point(548, 16);
+            this.rbPelaImagem.Name = "rbPelaImagem";
+            this.rbPelaImagem.Size = new System.Drawing.Size(86, 17);
+            this.rbPelaImagem.TabIndex = 34;
+            this.rbPelaImagem.TabStop = true;
+            this.rbPelaImagem.Text = "Pela Imagem";
+            this.rbPelaImagem.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1027, 450);
+            this.Controls.Add(this.rbPelaImagem);
+            this.Controls.Add(this.rbValorFixo);
+            this.Controls.Add(this.numOperacao);
+            this.Controls.Add(this.btlupIN);
+            this.Controls.Add(this.btlupOUT);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.btRgbBinario);
+            this.Controls.Add(this.numLimiar);
             this.Controls.Add(this.btEscalaCinza);
             this.Controls.Add(this.btConcatenarImagens);
             this.Controls.Add(this.btCortarImagem);
@@ -350,6 +465,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numValorY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLarguraRecorte)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAlturaRecorte)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numLimiar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numOperacao)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -382,6 +499,15 @@
         private System.Windows.Forms.Button btCortarImagem;
         private System.Windows.Forms.Button btConcatenarImagens;
         private System.Windows.Forms.Button btEscalaCinza;
+        private System.Windows.Forms.NumericUpDown numLimiar;
+        private System.Windows.Forms.Button btRgbBinario;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button btlupOUT;
+        private System.Windows.Forms.Button btlupIN;
+        private System.Windows.Forms.NumericUpDown numOperacao;
+        private System.Windows.Forms.RadioButton rbValorFixo;
+        private System.Windows.Forms.RadioButton rbPelaImagem;
     }
 }
 
