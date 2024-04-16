@@ -28,6 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.CarregaImagem1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -53,6 +59,20 @@
             this.btCortarImagem = new System.Windows.Forms.Button();
             this.btConcatenarImagens = new System.Windows.Forms.Button();
             this.btEscalaCinza = new System.Windows.Forms.Button();
+            this.numLimiar = new System.Windows.Forms.NumericUpDown();
+            this.btRgbBinario = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.btlupOUT = new System.Windows.Forms.Button();
+            this.btlupIN = new System.Windows.Forms.Button();
+            this.numOperacao = new System.Windows.Forms.NumericUpDown();
+            this.rbValorFixo = new System.Windows.Forms.RadioButton();
+            this.rbPelaImagem = new System.Windows.Forms.RadioButton();
+            this.rbPelaMedia = new System.Windows.Forms.RadioButton();
+            this.rbPelaMediana = new System.Windows.Forms.RadioButton();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.btEqualizarHistograma = new System.Windows.Forms.Button();
+            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.btAnd = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -60,6 +80,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numValorY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLarguraRecorte)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAlturaRecorte)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numLimiar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numOperacao)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             this.SuspendLayout();
             // 
             // CarregaImagem1
@@ -311,11 +335,184 @@
             this.btEscalaCinza.UseVisualStyleBackColor = true;
             this.btEscalaCinza.Click += new System.EventHandler(this.btEscalaCinza_Click);
             // 
+            // numLimiar
+            // 
+            this.numLimiar.Location = new System.Drawing.Point(148, 354);
+            this.numLimiar.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.numLimiar.Name = "numLimiar";
+            this.numLimiar.Size = new System.Drawing.Size(51, 20);
+            this.numLimiar.TabIndex = 25;
+            // 
+            // btRgbBinario
+            // 
+            this.btRgbBinario.Location = new System.Drawing.Point(22, 354);
+            this.btRgbBinario.Name = "btRgbBinario";
+            this.btRgbBinario.Size = new System.Drawing.Size(120, 23);
+            this.btRgbBinario.TabIndex = 26;
+            this.btRgbBinario.Text = "rgb -> binario";
+            this.btRgbBinario.UseVisualStyleBackColor = true;
+            this.btRgbBinario.Click += new System.EventHandler(this.btRgbBinario_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(205, 356);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(127, 13);
+            this.label8.TabIndex = 28;
+            this.label8.Text = "Digite o valor da mediana";
+            // 
+            // btlupOUT
+            // 
+            this.btlupOUT.Location = new System.Drawing.Point(682, 104);
+            this.btlupOUT.Name = "btlupOUT";
+            this.btlupOUT.Size = new System.Drawing.Size(75, 23);
+            this.btlupOUT.TabIndex = 30;
+            this.btlupOUT.Text = "LupOUT";
+            this.btlupOUT.UseVisualStyleBackColor = true;
+            this.btlupOUT.Click += new System.EventHandler(this.btlupOUT_Click);
+            // 
+            // btlupIN
+            // 
+            this.btlupIN.Location = new System.Drawing.Point(682, 133);
+            this.btlupIN.Name = "btlupIN";
+            this.btlupIN.Size = new System.Drawing.Size(75, 23);
+            this.btlupIN.TabIndex = 31;
+            this.btlupIN.Text = "LupIN";
+            this.btlupIN.UseVisualStyleBackColor = true;
+            this.btlupIN.Click += new System.EventHandler(this.btlupIN_Click);
+            // 
+            // numOperacao
+            // 
+            this.numOperacao.Location = new System.Drawing.Point(625, 39);
+            this.numOperacao.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.numOperacao.Name = "numOperacao";
+            this.numOperacao.Size = new System.Drawing.Size(51, 20);
+            this.numOperacao.TabIndex = 32;
+            // 
+            // rbValorFixo
+            // 
+            this.rbValorFixo.AutoSize = true;
+            this.rbValorFixo.Location = new System.Drawing.Point(547, 39);
+            this.rbValorFixo.Name = "rbValorFixo";
+            this.rbValorFixo.Size = new System.Drawing.Size(71, 17);
+            this.rbValorFixo.TabIndex = 33;
+            this.rbValorFixo.TabStop = true;
+            this.rbValorFixo.Text = "Valor Fixo";
+            this.rbValorFixo.UseVisualStyleBackColor = true;
+            // 
+            // rbPelaImagem
+            // 
+            this.rbPelaImagem.AutoSize = true;
+            this.rbPelaImagem.Location = new System.Drawing.Point(548, 16);
+            this.rbPelaImagem.Name = "rbPelaImagem";
+            this.rbPelaImagem.Size = new System.Drawing.Size(86, 17);
+            this.rbPelaImagem.TabIndex = 34;
+            this.rbPelaImagem.TabStop = true;
+            this.rbPelaImagem.Text = "Pela Imagem";
+            this.rbPelaImagem.UseVisualStyleBackColor = true;
+            // 
+            // rbPelaMedia
+            // 
+            this.rbPelaMedia.AutoSize = true;
+            this.rbPelaMedia.Location = new System.Drawing.Point(208, 372);
+            this.rbPelaMedia.Name = "rbPelaMedia";
+            this.rbPelaMedia.Size = new System.Drawing.Size(121, 17);
+            this.rbPelaMedia.TabIndex = 35;
+            this.rbPelaMedia.TabStop = true;
+            this.rbPelaMedia.Text = "Valor da media RGB";
+            this.rbPelaMedia.UseVisualStyleBackColor = true;
+            // 
+            // rbPelaMediana
+            // 
+            this.rbPelaMediana.AutoSize = true;
+            this.rbPelaMediana.Location = new System.Drawing.Point(208, 395);
+            this.rbPelaMediana.Name = "rbPelaMediana";
+            this.rbPelaMediana.Size = new System.Drawing.Size(107, 17);
+            this.rbPelaMediana.TabIndex = 36;
+            this.rbPelaMediana.TabStop = true;
+            this.rbPelaMediana.Text = "Valor da mediana";
+            this.rbPelaMediana.UseVisualStyleBackColor = true;
+            // 
+            // chart1
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(22, 437);
+            this.chart1.Name = "chart1";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(521, 242);
+            this.chart1.TabIndex = 37;
+            this.chart1.Text = "chart1";
+            // 
+            // btEqualizarHistograma
+            // 
+            this.btEqualizarHistograma.Location = new System.Drawing.Point(317, 236);
+            this.btEqualizarHistograma.Name = "btEqualizarHistograma";
+            this.btEqualizarHistograma.Size = new System.Drawing.Size(120, 23);
+            this.btEqualizarHistograma.TabIndex = 38;
+            this.btEqualizarHistograma.Text = "Equalizar Histograma";
+            this.btEqualizarHistograma.UseVisualStyleBackColor = true;
+            this.btEqualizarHistograma.Click += new System.EventHandler(this.btEqualizarHistograma_Click);
+            // 
+            // chart2
+            // 
+            chartArea2.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart2.Legends.Add(legend2);
+            this.chart2.Location = new System.Drawing.Point(625, 437);
+            this.chart2.Name = "chart2";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart2.Series.Add(series2);
+            this.chart2.Size = new System.Drawing.Size(462, 242);
+            this.chart2.TabIndex = 39;
+            this.chart2.Text = "chart2";
+            // 
+            // btAnd
+            // 
+            this.btAnd.Location = new System.Drawing.Point(317, 265);
+            this.btAnd.Name = "btAnd";
+            this.btAnd.Size = new System.Drawing.Size(120, 23);
+            this.btAnd.TabIndex = 40;
+            this.btAnd.Text = "AND";
+            this.btAnd.UseVisualStyleBackColor = true;
+            this.btAnd.Click += new System.EventHandler(this.btAnd_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1365, 749);
+            this.Controls.Add(this.btAnd);
+            this.Controls.Add(this.chart2);
+            this.Controls.Add(this.btEqualizarHistograma);
+            this.Controls.Add(this.chart1);
+            this.Controls.Add(this.rbPelaMediana);
+            this.Controls.Add(this.rbPelaMedia);
+            this.Controls.Add(this.rbPelaImagem);
+            this.Controls.Add(this.rbValorFixo);
+            this.Controls.Add(this.numOperacao);
+            this.Controls.Add(this.btlupIN);
+            this.Controls.Add(this.btlupOUT);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.btRgbBinario);
+            this.Controls.Add(this.numLimiar);
             this.Controls.Add(this.btEscalaCinza);
             this.Controls.Add(this.btConcatenarImagens);
             this.Controls.Add(this.btCortarImagem);
@@ -350,6 +547,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numValorY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLarguraRecorte)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAlturaRecorte)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numLimiar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numOperacao)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -382,6 +583,20 @@
         private System.Windows.Forms.Button btCortarImagem;
         private System.Windows.Forms.Button btConcatenarImagens;
         private System.Windows.Forms.Button btEscalaCinza;
+        private System.Windows.Forms.NumericUpDown numLimiar;
+        private System.Windows.Forms.Button btRgbBinario;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button btlupOUT;
+        private System.Windows.Forms.Button btlupIN;
+        private System.Windows.Forms.NumericUpDown numOperacao;
+        private System.Windows.Forms.RadioButton rbValorFixo;
+        private System.Windows.Forms.RadioButton rbPelaImagem;
+        private System.Windows.Forms.RadioButton rbPelaMedia;
+        private System.Windows.Forms.RadioButton rbPelaMediana;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.Button btEqualizarHistograma;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
+        private System.Windows.Forms.Button btAnd;
     }
 }
 

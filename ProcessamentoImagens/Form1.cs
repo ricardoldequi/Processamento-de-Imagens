@@ -12,6 +12,7 @@ using System.Security.Cryptography;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using static System.Net.Mime.MediaTypeNames;
+using System.Windows.Forms.DataVisualization.Charting;
 
 
 namespace ProcessamentoImagens
@@ -59,7 +60,7 @@ namespace ProcessamentoImagens
             // Loop pelos pixels da imagem
             for (int x = 0; x < imgOriginal.Width; x++)
             {
-                for (int y = 0; y < imgOriginal.Height; y++)
+                for (int y = 0; y < altura; y++)
                 {
                     Color pixelColor = imgOriginal.GetPixel(x, y);
 
@@ -131,6 +132,61 @@ namespace ProcessamentoImagens
             return imagemRecortada;
         }
 
+        public Bitmap ConverteImagemBinaria(Bitmap imgOriginal, bool usarMediana)
+        {
+            int limiar = (int)numLimiar.Value;
+
+            // Pega dimensões da imagem
+            int largura = imgOriginal.Width;
+            int altura = imgOriginal.Height;
+
+            // Cria uma nova imagem binária
+            Bitmap ImagemBinaria = new Bitmap(largura, altura);
+
+            // Loop pelos pixels da imagem
+            for (int x = 0; x < largura; x++)
+            {
+                for (int y = 0; y < altura; y++)
+                {
+                    Color pixelColor = imgOriginal.GetPixel(x, y);
+
+                    int intensidade;
+                    if (usarMediana)
+                    {
+                        // Armazena os valores de intensidade de cada componente de cor
+                        List<int> intensidades = new List<int>();
+                        intensidades.Add(pixelColor.R);
+                        intensidades.Add(pixelColor.G);
+                        intensidades.Add(pixelColor.B);
+
+                        // Ordena a lista de intensidades
+                        intensidades.Sort();
+
+                        // Calcula o valor mediano das intensidades
+                        intensidade = intensidades[intensidades.Count / 2];
+                    }
+                    else
+                    {
+                        // Calcula a média das componentes de cor
+                        intensidade = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
+                    }
+
+                    // Define o valor do pixel na imagem binária
+                    if (intensidade > limiar)
+                    {
+                        ImagemBinaria.SetPixel(x, y, Color.White); // Branco
+                    }
+                    else
+                    {
+                        ImagemBinaria.SetPixel(x, y, Color.Black); // Preto
+                    }
+                }
+            }
+
+            return ImagemBinaria;
+        }
+
+
         private void button1_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -182,16 +238,16 @@ namespace ProcessamentoImagens
 
         private void Negativa_Click(object sender, EventArgs e)
         {
-            // Certifique-se de que há uma imagem carregada no PictureBox1
-            if (pictureBox1.Image != null )
+            // validar se existe imagem adicionada
+            if (pictureBox1.Image != null)
             {
-                // Clone a imagem do PictureBox1
-                Bitmap originalImage = new Bitmap(pictureBox1.Image);
 
-                // Crie uma função para converter a imagem em negativo
-                Bitmap negativeImage = ConverteNegativo(originalImage);
+                Bitmap imgOriginal = new Bitmap(pictureBox1.Image);
 
-                // Exiba a imagem convertida no PictureBox3
+                //chama a funcao de converter pra negativo
+                Bitmap negativeImage = ConverteNegativo(imgOriginal);
+
+                // Exibe a imagem gerada
                 pictureBox3.Image = negativeImage;
             }
         }
@@ -340,8 +396,8 @@ namespace ProcessamentoImagens
             // Certifique-se de que há uma imagem carregada no PictureBox1
             if (pictureBox1.Image != null)
             {
-                // Clone a imagem do PictureBox1
-                Bitmap originalImage = new Bitmap(pictureBox1.Image);
+
+                Bitmap imgOriginal = new Bitmap(pictureBox1.Image);
 
                 // Obtenha os valores de x, y, larguraRecorte e alturaRecorte dos controles numéricos
                 //x: Essa é a coordenada horizontal do ponto de início do recorte
@@ -418,7 +474,205 @@ namespace ProcessamentoImagens
             }
         }
 
+        private void btRgbBinario_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Nenhuma imagem informada, por favor, insira a imagem na  caixa IMAGEM 1");
+                return;
+            }
+
+            // Clone a imagem do PictureBox1
+            Bitmap imgOriginal = new Bitmap(pictureBox1.Image);
+
+            Bitmap ImagemBinaria;
+            if (rbPelaMedia.Checked)
+            {
+                ImagemBinaria = ConverteImagemBinaria(imgOriginal, false); // Usa média
+            }
+            else if (rbPelaMediana.Checked)
+            {
+                ImagemBinaria = ConverteImagemBinaria(imgOriginal, true); // Usa mediana
+            }
+            else
+            {
+                MessageBox.Show("Selecione um tipo de cálculo (média ou mediana).");
+                return;
+            }
+
+            // Exibe a imagem convertida no PictureBox3
+            pictureBox3.Image = ImagemBinaria;
+        }
+
+        private void btlupIN_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Nenhuma imagem informada, por favor, insira a imagem na  caixa IMAGEM 1.");
+                return;
+
+            }
+            // Carrega a imagem original do PictureBox1
+            Bitmap imgOriginal = new Bitmap(pictureBox1.Image);
+
+            // Aplica o flip in na imagem original
+            Bitmap imagemFlipIN = FlipIN(imgOriginal);
+
+            // Exibe a imagem flip in no PictureBox3
+            pictureBox3.Image = imagemFlipIN;
+
+        }
+
+
+        private void btlupOUT_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Nenhuma imagem informada, por favor, insira a imagem na  caixa IMAGEM 1.");
+                return;
+            }
+
+            Bitmap imgOriginal = new Bitmap(pictureBox1.Image);
+
+            Bitmap imagemFlipOUT = FlipOut(imgOriginal);
+
+            pictureBox3.Image = imagemFlipOUT;
+        }
+
+
+        // Função Histograma
+        private void btEqualizarHistograma_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Nenhuma imagem informada, por favor, insira a imagem na  caixa IMAGEM 1.");
+                return;
+            }
+            Bitmap imgOriginal = new Bitmap(pictureBox1.Image);
+
+            // Carrega a imagem em escala de cinza
+            Bitmap ImagemCinza = ConverteEscalaCinza(imgOriginal);
+  
+                
+
+                // Cria um array de 256 inteiros, correspondendo os valores da escala de cinza
+                int[] histograma = new int[256];
+                for (int i = 0; i <ImagemCinza.Width; i++)
+                {
+                    for (int j = 0; j <ImagemCinza.Height; j++)
+                    {
+                        // Calcula o peso da escala de cinza
+                        Color c = ImagemCinza.GetPixel(i, j);
+                        int gray = (int)(c.R * 0.299 + c.G * 0.587 + c.B * 0.114);
+                        histograma[gray]++;
+                    }
+                }
+
+                // Calcula a função de distribuição acumulada (CDF) do histograma
+                int[] cdf = new int[256];
+                int sum = 0;
+                for (int i = 0; i < 256; i++)
+                {
+                    sum += histograma[i];
+                    cdf[i] = sum;
+                }
+
+                // Equaliza o histograma
+                int pixels = ImagemCinza.Width * ImagemCinza.Height;
+                for (int i = 0; i < 256; i++)
+                {
+                    cdf[i] = (int)(255 * ((float)cdf[i] / pixels));
+                }
+
+                // Cria uma nova imagem equalizada
+                Bitmap imagemEqualizada = new Bitmap(ImagemCinza.Width, ImagemCinza.Height);
+                for (int i = 0; i < ImagemCinza.Width; i++)
+                {
+                    for (int j = 0; j < ImagemCinza.Height; j++)
+                    {
+                        Color c = ImagemCinza.GetPixel(i, j);
+                        int gray = (int)(c.R * 0.299 + c.G * 0.587 + c.B * 0.114);
+                        int eqGray = cdf[gray];
+                        Color eqColor = Color.FromArgb(eqGray, eqGray, eqGray);
+                        imagemEqualizada.SetPixel(i, j, eqColor);
+                    }
+                }
+
+                pictureBox3.Image = imagemEqualizada;
+
+                // Coloca o histograma final em um vetor de 256 valores, correspondendo os valores da escala de cinza
+                int[] histogramaFinal = new int[256];
+                for (int i = 0; i < imagemEqualizada.Width; i++)
+                {
+                    for (int j = 0; j < imagemEqualizada.Height; j++)
+                    {
+                        Color c = imagemEqualizada.GetPixel(i, j);
+                        int gray = (int)(c.R * 0.299 + c.G * 0.587 + c.B * 0.114);
+                        histogramaFinal[gray]++;
+                    }
+                }
+
+                // Adiciona o gráfico do primeiro histograma
+                chart1.Series.Clear();
+                chart1.Series.Add("Imagem Inicial");
+                chart1.Series["Imagem Inicial"].ChartType = SeriesChartType.Column;
+                chart1.Series["Imagem Inicial"].Points.DataBindY(histograma);
+                chart1.ChartAreas[0].AxisY.Maximum = histograma.Max() + 10;
+
+                // Adiciona o gráfico do segundo histograma
+                chart2.Series.Clear();
+                chart2.Series.Add("Imagem Final");
+                chart2.Series["Imagem Final"].ChartType = SeriesChartType.Column;
+                chart2.Series["Imagem Final"].Points.DataBindY(histogramaFinal);
+                chart2.ChartAreas[0].AxisY.Maximum = histogramaFinal.Max() + 10;
+
+            }
+
+        private void btAnd_Click(object sender, EventArgs e)
+        {
+            System.Drawing.Image image1 = pictureBox1.Image;
+            System.Drawing.Image image2 = pictureBox2.Image;
+
+
+
+
+            if (pictureBox1 == null || pictureBox2 == null)
+            {
+                MessageBox.Show("Por favor, selecione duas imagens");
+                return;
+            }
+
+            if (image1.Width != image2.Width || image1.Height != image2.Height || image1.PixelFormat != image2.PixelFormat)
+            {
+                MessageBox.Show("As imagens precisam ter o mesmo tamanho e formato para serem somadas.");
+                return;
+            }
+
+            Bitmap imagemResultado = new Bitmap(image1.Width, image1.Height);
+
+            for (int x = 0; x < image1.Width; x++)
+            {
+                for (int y = 0; y < image1.Height; y++)
+                {
+                    Color color1 = ((Bitmap)image1).GetPixel(x, y);
+                    Color color2 = ((Bitmap)image2).GetPixel(x, y);
+
+                    // Operação simples, usando apenas o sinal do AND
+                    Color corResultado = Color.FromArgb(color1.R & color2.R, color1.G & color2.G, color1.B & color2.B);
+                    imagemResultado.SetPixel(x, y, corResultado);
+                }
+            }
+
+            pictureBox3.Image = imagemResultado;
+            }
+      
+        }
     }
-}
+
+
+
+    
+
+
     
 
