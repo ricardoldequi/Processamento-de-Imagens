@@ -1,4 +1,4 @@
-﻿namespace ProcessamentoImagens
+namespace ProcessamentoImagens
 {
     partial class Form1
     {
@@ -61,18 +61,22 @@
             this.btEscalaCinza = new System.Windows.Forms.Button();
             this.numLimiar = new System.Windows.Forms.NumericUpDown();
             this.btRgbBinario = new System.Windows.Forms.Button();
+
+
             this.label8 = new System.Windows.Forms.Label();
             this.btlupOUT = new System.Windows.Forms.Button();
             this.btlupIN = new System.Windows.Forms.Button();
             this.numOperacao = new System.Windows.Forms.NumericUpDown();
             this.rbValorFixo = new System.Windows.Forms.RadioButton();
             this.rbPelaImagem = new System.Windows.Forms.RadioButton();
+
             this.rbPelaMedia = new System.Windows.Forms.RadioButton();
             this.rbPelaMediana = new System.Windows.Forms.RadioButton();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.btEqualizarHistograma = new System.Windows.Forms.Button();
             this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.btAnd = new System.Windows.Forms.Button();
+
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -82,13 +86,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.numAlturaRecorte)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLimiar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOperacao)).BeginInit();
+
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
+
             this.SuspendLayout();
             // 
             // CarregaImagem1
             // 
-            this.CarregaImagem1.Location = new System.Drawing.Point(12, 176);
+            this.CarregaImagem1.Location = new System.Drawing.Point(22, 176);
             this.CarregaImagem1.Name = "CarregaImagem1";
             this.CarregaImagem1.Size = new System.Drawing.Size(107, 23);
             this.CarregaImagem1.TabIndex = 0;
@@ -99,7 +105,7 @@
             // pictureBox1
             // 
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 29);
+            this.pictureBox1.Location = new System.Drawing.Point(22, 29);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(155, 141);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -109,7 +115,7 @@
             // pictureBox2
             // 
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox2.Location = new System.Drawing.Point(247, 29);
+            this.pictureBox2.Location = new System.Drawing.Point(317, 29);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(155, 141);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -119,7 +125,7 @@
             // pictureBox3
             // 
             this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox3.Location = new System.Drawing.Point(633, 29);
+            this.pictureBox3.Location = new System.Drawing.Point(831, 16);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(155, 141);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -129,7 +135,7 @@
             // imagemResult
             // 
             this.imagemResult.AutoSize = true;
-            this.imagemResult.Location = new System.Drawing.Point(630, 13);
+            this.imagemResult.Location = new System.Drawing.Point(828, 0);
             this.imagemResult.Name = "imagemResult";
             this.imagemResult.Size = new System.Drawing.Size(76, 13);
             this.imagemResult.TabIndex = 4;
@@ -138,7 +144,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(244, 13);
+            this.label1.Location = new System.Drawing.Point(314, 13);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(52, 13);
             this.label1.TabIndex = 5;
@@ -147,7 +153,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 13);
+            this.label2.Location = new System.Drawing.Point(19, 13);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(52, 13);
             this.label2.TabIndex = 6;
@@ -155,7 +161,7 @@
             // 
             // carregarImagem2
             // 
-            this.carregarImagem2.Location = new System.Drawing.Point(247, 176);
+            this.carregarImagem2.Location = new System.Drawing.Point(317, 176);
             this.carregarImagem2.Name = "carregarImagem2";
             this.carregarImagem2.Size = new System.Drawing.Size(107, 23);
             this.carregarImagem2.TabIndex = 7;
@@ -165,7 +171,7 @@
             // 
             // Negativa
             // 
-            this.Negativa.Location = new System.Drawing.Point(12, 267);
+            this.Negativa.Location = new System.Drawing.Point(22, 267);
             this.Negativa.Name = "Negativa";
             this.Negativa.Size = new System.Drawing.Size(120, 23);
             this.Negativa.TabIndex = 8;
@@ -175,7 +181,8 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(633, 206);
+            this.textBox1.Enabled = false;
+            this.textBox1.Location = new System.Drawing.Point(831, 193);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(155, 232);
@@ -183,7 +190,7 @@
             // 
             // Array
             // 
-            this.Array.Location = new System.Drawing.Point(12, 296);
+            this.Array.Location = new System.Drawing.Point(22, 296);
             this.Array.Name = "Array";
             this.Array.Size = new System.Drawing.Size(120, 23);
             this.Array.TabIndex = 10;
@@ -193,7 +200,7 @@
             // 
             // btAdicao
             // 
-            this.btAdicao.Location = new System.Drawing.Point(439, 29);
+            this.btAdicao.Location = new System.Drawing.Point(682, 10);
             this.btAdicao.Name = "btAdicao";
             this.btAdicao.Size = new System.Drawing.Size(75, 23);
             this.btAdicao.TabIndex = 11;
@@ -203,7 +210,7 @@
             // 
             // btSubtracao
             // 
-            this.btSubtracao.Location = new System.Drawing.Point(439, 58);
+            this.btSubtracao.Location = new System.Drawing.Point(682, 39);
             this.btSubtracao.Name = "btSubtracao";
             this.btSubtracao.Size = new System.Drawing.Size(75, 23);
             this.btSubtracao.TabIndex = 12;
@@ -213,7 +220,7 @@
             // 
             // btSalvarImagem
             // 
-            this.btSalvarImagem.Location = new System.Drawing.Point(658, 176);
+            this.btSalvarImagem.Location = new System.Drawing.Point(856, 163);
             this.btSalvarImagem.Name = "btSalvarImagem";
             this.btSalvarImagem.Size = new System.Drawing.Size(107, 23);
             this.btSalvarImagem.TabIndex = 13;
@@ -223,7 +230,7 @@
             // 
             // numValorX
             // 
-            this.numValorX.Location = new System.Drawing.Point(470, 130);
+            this.numValorX.Location = new System.Drawing.Point(697, 244);
             this.numValorX.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -235,7 +242,7 @@
             // 
             // numValorY
             // 
-            this.numValorY.Location = new System.Drawing.Point(470, 156);
+            this.numValorY.Location = new System.Drawing.Point(697, 270);
             this.numValorY.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -247,7 +254,7 @@
             // 
             // numLarguraRecorte
             // 
-            this.numLarguraRecorte.Location = new System.Drawing.Point(470, 199);
+            this.numLarguraRecorte.Location = new System.Drawing.Point(697, 313);
             this.numLarguraRecorte.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -259,7 +266,7 @@
             // 
             // numAlturaRecorte
             // 
-            this.numAlturaRecorte.Location = new System.Drawing.Point(470, 225);
+            this.numAlturaRecorte.Location = new System.Drawing.Point(697, 339);
             this.numAlturaRecorte.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -272,7 +279,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(408, 132);
+            this.label3.Location = new System.Drawing.Point(635, 246);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(56, 13);
             this.label3.TabIndex = 18;
@@ -281,7 +288,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(408, 156);
+            this.label4.Location = new System.Drawing.Point(635, 270);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(56, 13);
             this.label4.TabIndex = 19;
@@ -290,7 +297,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(365, 201);
+            this.label5.Location = new System.Drawing.Point(592, 315);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(99, 13);
             this.label5.TabIndex = 20;
@@ -299,7 +306,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(374, 227);
+            this.label6.Location = new System.Drawing.Point(601, 341);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(90, 13);
             this.label6.TabIndex = 21;
@@ -307,7 +314,7 @@
             // 
             // btCortarImagem
             // 
-            this.btCortarImagem.Location = new System.Drawing.Point(470, 251);
+            this.btCortarImagem.Location = new System.Drawing.Point(650, 382);
             this.btCortarImagem.Name = "btCortarImagem";
             this.btCortarImagem.Size = new System.Drawing.Size(107, 23);
             this.btCortarImagem.TabIndex = 22;
@@ -317,7 +324,7 @@
             // 
             // btConcatenarImagens
             // 
-            this.btConcatenarImagens.Location = new System.Drawing.Point(12, 325);
+            this.btConcatenarImagens.Location = new System.Drawing.Point(22, 325);
             this.btConcatenarImagens.Name = "btConcatenarImagens";
             this.btConcatenarImagens.Size = new System.Drawing.Size(120, 23);
             this.btConcatenarImagens.TabIndex = 23;
@@ -327,7 +334,7 @@
             // 
             // btEscalaCinza
             // 
-            this.btEscalaCinza.Location = new System.Drawing.Point(12, 238);
+            this.btEscalaCinza.Location = new System.Drawing.Point(22, 238);
             this.btEscalaCinza.Name = "btEscalaCinza";
             this.btEscalaCinza.Size = new System.Drawing.Size(120, 23);
             this.btEscalaCinza.TabIndex = 24;
@@ -357,6 +364,8 @@
             this.btRgbBinario.UseVisualStyleBackColor = true;
             this.btRgbBinario.Click += new System.EventHandler(this.btRgbBinario_Click);
             // 
+
+
             // label8
             // 
             this.label8.AutoSize = true;
@@ -420,6 +429,7 @@
             this.rbPelaImagem.Text = "Pela Imagem";
             this.rbPelaImagem.UseVisualStyleBackColor = true;
             // 
+
             // rbPelaMedia
             // 
             this.rbPelaMedia.AutoSize = true;
@@ -494,10 +504,12 @@
             this.btAnd.UseVisualStyleBackColor = true;
             this.btAnd.Click += new System.EventHandler(this.btAnd_Click);
             // 
+
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+
             this.ClientSize = new System.Drawing.Size(1365, 749);
             this.Controls.Add(this.btAnd);
             this.Controls.Add(this.chart2);
@@ -505,12 +517,15 @@
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.rbPelaMediana);
             this.Controls.Add(this.rbPelaMedia);
+
             this.Controls.Add(this.rbPelaImagem);
             this.Controls.Add(this.rbValorFixo);
             this.Controls.Add(this.numOperacao);
             this.Controls.Add(this.btlupIN);
             this.Controls.Add(this.btlupOUT);
             this.Controls.Add(this.label8);
+
+
             this.Controls.Add(this.btRgbBinario);
             this.Controls.Add(this.numLimiar);
             this.Controls.Add(this.btEscalaCinza);
@@ -549,8 +564,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numAlturaRecorte)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLimiar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOperacao)).EndInit();
+
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
+
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -585,18 +602,18 @@
         private System.Windows.Forms.Button btEscalaCinza;
         private System.Windows.Forms.NumericUpDown numLimiar;
         private System.Windows.Forms.Button btRgbBinario;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Button btlupOUT;
-        private System.Windows.Forms.Button btlupIN;
-        private System.Windows.Forms.NumericUpDown numOperacao;
-        private System.Windows.Forms.RadioButton rbValorFixo;
-        private System.Windows.Forms.RadioButton rbPelaImagem;
+
+
+        private System.Windows.Forms.Label label7;
+
+
         private System.Windows.Forms.RadioButton rbPelaMedia;
         private System.Windows.Forms.RadioButton rbPelaMediana;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Button btEqualizarHistograma;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
         private System.Windows.Forms.Button btAnd;
+
     }
 }
 
