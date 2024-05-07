@@ -1,4 +1,4 @@
-﻿namespace ProcessamentoImagens
+namespace ProcessamentoImagens
 {
     partial class Form1
     {
@@ -28,6 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.CarregaImagem1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -55,13 +61,22 @@
             this.btEscalaCinza = new System.Windows.Forms.Button();
             this.numLimiar = new System.Windows.Forms.NumericUpDown();
             this.btRgbBinario = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
+
+
             this.label8 = new System.Windows.Forms.Label();
             this.btlupOUT = new System.Windows.Forms.Button();
             this.btlupIN = new System.Windows.Forms.Button();
             this.numOperacao = new System.Windows.Forms.NumericUpDown();
             this.rbValorFixo = new System.Windows.Forms.RadioButton();
             this.rbPelaImagem = new System.Windows.Forms.RadioButton();
+
+            this.rbPelaMedia = new System.Windows.Forms.RadioButton();
+            this.rbPelaMediana = new System.Windows.Forms.RadioButton();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.btEqualizarHistograma = new System.Windows.Forms.Button();
+            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.btAnd = new System.Windows.Forms.Button();
+
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -71,6 +86,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numAlturaRecorte)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLimiar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOperacao)).BeginInit();
+
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
+
             this.SuspendLayout();
             // 
             // CarregaImagem1
@@ -345,15 +364,8 @@
             this.btRgbBinario.UseVisualStyleBackColor = true;
             this.btRgbBinario.Click += new System.EventHandler(this.btRgbBinario_Click);
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(10, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(35, 13);
-            this.label7.TabIndex = 27;
-            this.label7.Text = "label7";
-            // 
+
+
             // label8
             // 
             this.label8.AutoSize = true;
@@ -417,18 +429,103 @@
             this.rbPelaImagem.Text = "Pela Imagem";
             this.rbPelaImagem.UseVisualStyleBackColor = true;
             // 
+
+            // rbPelaMedia
+            // 
+            this.rbPelaMedia.AutoSize = true;
+            this.rbPelaMedia.Location = new System.Drawing.Point(208, 372);
+            this.rbPelaMedia.Name = "rbPelaMedia";
+            this.rbPelaMedia.Size = new System.Drawing.Size(121, 17);
+            this.rbPelaMedia.TabIndex = 35;
+            this.rbPelaMedia.TabStop = true;
+            this.rbPelaMedia.Text = "Valor da media RGB";
+            this.rbPelaMedia.UseVisualStyleBackColor = true;
+            // 
+            // rbPelaMediana
+            // 
+            this.rbPelaMediana.AutoSize = true;
+            this.rbPelaMediana.Location = new System.Drawing.Point(208, 395);
+            this.rbPelaMediana.Name = "rbPelaMediana";
+            this.rbPelaMediana.Size = new System.Drawing.Size(107, 17);
+            this.rbPelaMediana.TabIndex = 36;
+            this.rbPelaMediana.TabStop = true;
+            this.rbPelaMediana.Text = "Valor da mediana";
+            this.rbPelaMediana.UseVisualStyleBackColor = true;
+            // 
+            // chart1
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(22, 437);
+            this.chart1.Name = "chart1";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(521, 242);
+            this.chart1.TabIndex = 37;
+            this.chart1.Text = "chart1";
+            // 
+            // btEqualizarHistograma
+            // 
+            this.btEqualizarHistograma.Location = new System.Drawing.Point(317, 236);
+            this.btEqualizarHistograma.Name = "btEqualizarHistograma";
+            this.btEqualizarHistograma.Size = new System.Drawing.Size(120, 23);
+            this.btEqualizarHistograma.TabIndex = 38;
+            this.btEqualizarHistograma.Text = "Equalizar Histograma";
+            this.btEqualizarHistograma.UseVisualStyleBackColor = true;
+            this.btEqualizarHistograma.Click += new System.EventHandler(this.btEqualizarHistograma_Click);
+            // 
+            // chart2
+            // 
+            chartArea2.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart2.Legends.Add(legend2);
+            this.chart2.Location = new System.Drawing.Point(625, 437);
+            this.chart2.Name = "chart2";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart2.Series.Add(series2);
+            this.chart2.Size = new System.Drawing.Size(462, 242);
+            this.chart2.TabIndex = 39;
+            this.chart2.Text = "chart2";
+            // 
+            // btAnd
+            // 
+            this.btAnd.Location = new System.Drawing.Point(317, 265);
+            this.btAnd.Name = "btAnd";
+            this.btAnd.Size = new System.Drawing.Size(120, 23);
+            this.btAnd.TabIndex = 40;
+            this.btAnd.Text = "AND";
+            this.btAnd.UseVisualStyleBackColor = true;
+            this.btAnd.Click += new System.EventHandler(this.btAnd_Click);
+            // 
+
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1027, 450);
+
+            this.ClientSize = new System.Drawing.Size(1365, 749);
+            this.Controls.Add(this.btAnd);
+            this.Controls.Add(this.chart2);
+            this.Controls.Add(this.btEqualizarHistograma);
+            this.Controls.Add(this.chart1);
+            this.Controls.Add(this.rbPelaMediana);
+            this.Controls.Add(this.rbPelaMedia);
+
             this.Controls.Add(this.rbPelaImagem);
             this.Controls.Add(this.rbValorFixo);
             this.Controls.Add(this.numOperacao);
             this.Controls.Add(this.btlupIN);
             this.Controls.Add(this.btlupOUT);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
+
+
             this.Controls.Add(this.btRgbBinario);
             this.Controls.Add(this.numLimiar);
             this.Controls.Add(this.btEscalaCinza);
@@ -467,6 +564,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numAlturaRecorte)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLimiar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numOperacao)).EndInit();
+
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
+
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -501,13 +602,18 @@
         private System.Windows.Forms.Button btEscalaCinza;
         private System.Windows.Forms.NumericUpDown numLimiar;
         private System.Windows.Forms.Button btRgbBinario;
+
+
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Button btlupOUT;
-        private System.Windows.Forms.Button btlupIN;
-        private System.Windows.Forms.NumericUpDown numOperacao;
-        private System.Windows.Forms.RadioButton rbValorFixo;
-        private System.Windows.Forms.RadioButton rbPelaImagem;
+
+
+        private System.Windows.Forms.RadioButton rbPelaMedia;
+        private System.Windows.Forms.RadioButton rbPelaMediana;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.Button btEqualizarHistograma;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
+        private System.Windows.Forms.Button btAnd;
+
     }
 }
 
