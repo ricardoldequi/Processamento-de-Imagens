@@ -80,6 +80,20 @@ namespace ProcessamentoImagens
             this.numericUpDownAlpha = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.rb3x3 = new System.Windows.Forms.RadioButton();
+            this.rb5x5 = new System.Windows.Forms.RadioButton();
+            this.rb7x7 = new System.Windows.Forms.RadioButton();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.nupOrdem = new System.Windows.Forms.NumericUpDown();
+            this.btGaussiana = new System.Windows.Forms.Button();
+            this.btOrdem = new System.Windows.Forms.Button();
+            this.btvMediana = new System.Windows.Forms.Button();
+            this.btvMedia = new System.Windows.Forms.Button();
+            this.btvMinimo = new System.Windows.Forms.Button();
+            this.btvMaximo = new System.Windows.Forms.Button();
+            this.btSuave = new System.Windows.Forms.Button();
+            this.nupGaussiana = new System.Windows.Forms.NumericUpDown();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -92,6 +106,10 @@ namespace ProcessamentoImagens
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAlpha)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nupOrdem)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupGaussiana)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.SuspendLayout();
             // 
             // CarregaImagem1
@@ -129,7 +147,7 @@ namespace ProcessamentoImagens
             this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBox3.Location = new System.Drawing.Point(892, 29);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(155, 141);
+            this.pictureBox3.Size = new System.Drawing.Size(216, 182);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox3.TabIndex = 3;
             this.pictureBox3.TabStop = false;
@@ -221,7 +239,7 @@ namespace ProcessamentoImagens
             // 
             // btSalvarImagem
             // 
-            this.btSalvarImagem.Location = new System.Drawing.Point(892, 176);
+            this.btSalvarImagem.Location = new System.Drawing.Point(892, 222);
             this.btSalvarImagem.Name = "btSalvarImagem";
             this.btSalvarImagem.Size = new System.Drawing.Size(107, 23);
             this.btSalvarImagem.TabIndex = 13;
@@ -571,11 +589,178 @@ namespace ProcessamentoImagens
             this.label9.TabIndex = 47;
             this.label9.Text = "Array";
             // 
+            // rb3x3
+            // 
+            this.rb3x3.AutoSize = true;
+            this.rb3x3.Location = new System.Drawing.Point(18, 19);
+            this.rb3x3.Name = "rb3x3";
+            this.rb3x3.Size = new System.Drawing.Size(48, 17);
+            this.rb3x3.TabIndex = 48;
+            this.rb3x3.TabStop = true;
+            this.rb3x3.Text = "3 x 3";
+            this.rb3x3.UseVisualStyleBackColor = true;
+            // 
+            // rb5x5
+            // 
+            this.rb5x5.AutoSize = true;
+            this.rb5x5.Location = new System.Drawing.Point(79, 20);
+            this.rb5x5.Name = "rb5x5";
+            this.rb5x5.Size = new System.Drawing.Size(48, 17);
+            this.rb5x5.TabIndex = 49;
+            this.rb5x5.TabStop = true;
+            this.rb5x5.Text = "5 x 5";
+            this.rb5x5.UseVisualStyleBackColor = true;
+            // 
+            // rb7x7
+            // 
+            this.rb7x7.AutoSize = true;
+            this.rb7x7.Location = new System.Drawing.Point(143, 19);
+            this.rb7x7.Name = "rb7x7";
+            this.rb7x7.Size = new System.Drawing.Size(48, 17);
+            this.rb7x7.TabIndex = 50;
+            this.rb7x7.TabStop = true;
+            this.rb7x7.Text = "7 x 7";
+            this.rb7x7.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.pictureBox4);
+            this.groupBox1.Controls.Add(this.nupGaussiana);
+            this.groupBox1.Controls.Add(this.btSuave);
+            this.groupBox1.Controls.Add(this.nupOrdem);
+            this.groupBox1.Controls.Add(this.btOrdem);
+            this.groupBox1.Controls.Add(this.btGaussiana);
+            this.groupBox1.Controls.Add(this.btvMediana);
+            this.groupBox1.Controls.Add(this.btvMedia);
+            this.groupBox1.Controls.Add(this.btvMinimo);
+            this.groupBox1.Controls.Add(this.btvMaximo);
+            this.groupBox1.Controls.Add(this.rb3x3);
+            this.groupBox1.Controls.Add(this.rb7x7);
+            this.groupBox1.Controls.Add(this.rb5x5);
+            this.groupBox1.Location = new System.Drawing.Point(450, 176);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(236, 255);
+            this.groupBox1.TabIndex = 51;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Vizinhança";
+            // 
+            // nupOrdem
+            // 
+            this.nupOrdem.Location = new System.Drawing.Point(99, 179);
+            this.nupOrdem.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.nupOrdem.Name = "nupOrdem";
+            this.nupOrdem.Size = new System.Drawing.Size(51, 20);
+            this.nupOrdem.TabIndex = 52;
+            // 
+            // btGaussiana
+            // 
+            this.btGaussiana.Location = new System.Drawing.Point(18, 224);
+            this.btGaussiana.Name = "btGaussiana";
+            this.btGaussiana.Size = new System.Drawing.Size(75, 23);
+            this.btGaussiana.TabIndex = 57;
+            this.btGaussiana.Text = "Gaussiana";
+            this.btGaussiana.UseVisualStyleBackColor = true;
+            this.btGaussiana.Click += new System.EventHandler(this.btGaussiana_Click);
+            // 
+            // btOrdem
+            // 
+            this.btOrdem.Location = new System.Drawing.Point(18, 179);
+            this.btOrdem.Name = "btOrdem";
+            this.btOrdem.Size = new System.Drawing.Size(75, 23);
+            this.btOrdem.TabIndex = 56;
+            this.btOrdem.Text = "Ordem";
+            this.btOrdem.UseVisualStyleBackColor = true;
+            this.btOrdem.Click += new System.EventHandler(this.btOrdem_Click);
+            // 
+            // btvMediana
+            // 
+            this.btvMediana.Location = new System.Drawing.Point(116, 89);
+            this.btvMediana.Name = "btvMediana";
+            this.btvMediana.Size = new System.Drawing.Size(75, 23);
+            this.btvMediana.TabIndex = 55;
+            this.btvMediana.Text = "Mediana";
+            this.btvMediana.UseVisualStyleBackColor = true;
+            this.btvMediana.Click += new System.EventHandler(this.btvMediana_Click);
+            // 
+            // btvMedia
+            // 
+            this.btvMedia.Location = new System.Drawing.Point(18, 89);
+            this.btvMedia.Name = "btvMedia";
+            this.btvMedia.Size = new System.Drawing.Size(75, 23);
+            this.btvMedia.TabIndex = 54;
+            this.btvMedia.Text = "Media";
+            this.btvMedia.UseVisualStyleBackColor = true;
+            this.btvMedia.Click += new System.EventHandler(this.btvMedia_Click);
+            // 
+            // btvMinimo
+            // 
+            this.btvMinimo.Location = new System.Drawing.Point(116, 49);
+            this.btvMinimo.Name = "btvMinimo";
+            this.btvMinimo.Size = new System.Drawing.Size(75, 23);
+            this.btvMinimo.TabIndex = 53;
+            this.btvMinimo.Text = "Minimo";
+            this.btvMinimo.UseVisualStyleBackColor = true;
+            this.btvMinimo.Click += new System.EventHandler(this.btvMinimo_Click);
+            // 
+            // btvMaximo
+            // 
+            this.btvMaximo.Location = new System.Drawing.Point(18, 49);
+            this.btvMaximo.Name = "btvMaximo";
+            this.btvMaximo.Size = new System.Drawing.Size(75, 23);
+            this.btvMaximo.TabIndex = 52;
+            this.btvMaximo.Text = "Máximo";
+            this.btvMaximo.UseVisualStyleBackColor = true;
+            this.btvMaximo.Click += new System.EventHandler(this.btvMaximo_Click);
+            // 
+            // btSuave
+            // 
+            this.btSuave.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btSuave.Location = new System.Drawing.Point(18, 137);
+            this.btSuave.Name = "btSuave";
+            this.btSuave.Size = new System.Drawing.Size(173, 23);
+            this.btSuave.TabIndex = 58;
+            this.btSuave.Text = "Suavização Conservativa";
+            this.btSuave.UseVisualStyleBackColor = true;
+            this.btSuave.Click += new System.EventHandler(this.btSuave_Click);
+            // 
+            // nupGaussiana
+            // 
+            this.nupGaussiana.DecimalPlaces = 2;
+            this.nupGaussiana.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.nupGaussiana.Location = new System.Drawing.Point(99, 224);
+            this.nupGaussiana.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.nupGaussiana.Name = "nupGaussiana";
+            this.nupGaussiana.Size = new System.Drawing.Size(51, 20);
+            this.nupGaussiana.TabIndex = 59;
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox4.Location = new System.Drawing.Point(175, 205);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(61, 50);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox4.TabIndex = 52;
+            this.pictureBox4.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1365, 749);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.numericUpDownAlpha);
@@ -636,6 +821,11 @@ namespace ProcessamentoImagens
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAlpha)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nupOrdem)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupGaussiana)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -689,6 +879,20 @@ namespace ProcessamentoImagens
         private System.Windows.Forms.NumericUpDown numericUpDownAlpha;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.RadioButton rb3x3;
+        private System.Windows.Forms.RadioButton rb5x5;
+        private System.Windows.Forms.RadioButton rb7x7;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btvMediana;
+        private System.Windows.Forms.Button btvMedia;
+        private System.Windows.Forms.Button btvMinimo;
+        private System.Windows.Forms.Button btvMaximo;
+        private System.Windows.Forms.Button btGaussiana;
+        private System.Windows.Forms.Button btOrdem;
+        private System.Windows.Forms.NumericUpDown nupOrdem;
+        private System.Windows.Forms.Button btSuave;
+        private System.Windows.Forms.NumericUpDown nupGaussiana;
+        private System.Windows.Forms.PictureBox pictureBox4;
     }
 }
 

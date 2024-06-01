@@ -24,6 +24,207 @@ namespace ProcessamentoImagens
             InitializeComponent();
         }
 
+        // Função para pegar o máximo da matriz
+        private int GetMaximo(int[,] matriz)
+        {
+            int maximo = int.MinValue;
+
+            for (int i = 0; i < matriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < matriz.GetLength(1); j++)
+                {
+                    if (matriz[i, j] > maximo)
+                    {
+                        maximo = matriz[i, j];
+                    }
+                }
+            }
+
+            return maximo;
+        }
+
+        // Função para pegar o minimo da matriz
+        private int GetMinimo(int[,] matriz)
+        {
+            int minimo = int.MaxValue;
+
+            for (int i = 0; i < matriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < matriz.GetLength(1); j++)
+                {
+                    if (matriz[i, j] < minimo)
+                    {
+                        minimo = matriz[i, j];
+                    }
+                }
+            }
+
+            return minimo;
+        }
+
+        // Função para pegar o valor médio da matriz
+        private int GetMedia(int[,] matriz)
+        {
+            int soma = 0;
+
+            for (int i = 0; i < matriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < matriz.GetLength(1); j++)
+                {
+                    soma += matriz[i, j];
+                }
+            }
+
+            int media = soma / (matriz.GetLength(0) * matriz.GetLength(1));
+            return media;
+        }
+
+        // Função para pegar o valor mediano da matriz
+        private int GetMediana(int[,] matriz)
+        {
+            int tamanho = matriz.GetLength(0) * matriz.GetLength(1);
+            int[] elementos = new int[tamanho];
+
+            int index = 0;
+            for (int i = 0; i < matriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < matriz.GetLength(1); j++)
+                {
+                    elementos[index] = matriz[i, j];
+                    index++;
+                }
+            }
+
+            int mediana = QuickSelect(elementos, 0, elementos.Length - 1, elementos.Length / 2);
+            return mediana;
+        }
+
+        private int GetSuave(int[,] matriz)
+        {
+            int tamanho = matriz.GetLength(0) * matriz.GetLength(1);
+            int[] elementos = new int[tamanho];
+
+            int index = 0;
+            for (int i = 0; i < matriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < matriz.GetLength(1); j++)
+                {
+                    elementos[index] = matriz[i, j];
+                    index++;
+                }
+            }
+
+            int meio = QuickSelect(elementos, 0, elementos.Length - 1, 4);
+            if (rb3x3.Checked)
+            {
+                meio = QuickSelect(elementos, 0, elementos.Length - 1, 4);
+            }
+            else if (rb5x5.Checked)
+            {
+                meio = QuickSelect(elementos, 0, elementos.Length - 1, 12);
+            }
+            else if (rb7x7.Checked)
+            {
+                meio = QuickSelect(elementos, 0, elementos.Length - 1, 24);
+            }
+
+            int min = QuickSelect(elementos, 0, elementos.Length - 1, 0);
+            int max = QuickSelect(elementos, 0, elementos.Length - 1, elementos.Length - 1);
+            if (meio > max)
+            {
+                meio = max;
+            }
+            else if (meio < min)
+            {
+                meio = min;
+            }
+
+            return meio;
+        }
+
+
+        private int GetOrdem(int[,] matriz)
+        {
+            int tamanho = matriz.GetLength(0) * matriz.GetLength(1);
+            int[] elementos = new int[tamanho];
+
+            int index = 0;
+            for (int i = 0; i < matriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < matriz.GetLength(1); j++)
+                {
+                    elementos[index] = matriz[i, j];
+                    index++;
+                }
+            }
+
+            int ordem = QuickSelect(elementos, 0, elementos.Length - 1, (int)nupOrdem.Value);
+            return ordem;
+        }
+
+        private int QuickSelect(int[] arr, int left, int right, int k)
+        {
+            if (left == right)
+                return arr[left];
+
+            int pivotIndex = Partition(arr, left, right);
+
+            if (k == pivotIndex)
+                return arr[k];
+            else if (k < pivotIndex)
+                return QuickSelect(arr, left, pivotIndex - 1, k);
+            else
+                return QuickSelect(arr, pivotIndex + 1, right, k);
+        }
+
+        private int Partition(int[] arr, int left, int right)
+        {
+            int pivot = arr[right];
+            int storeIndex = left;
+
+            for (int i = left; i < right; i++)
+            {
+                if (arr[i] < pivot)
+                {
+                    Swap(arr, storeIndex, i);
+                    storeIndex++;
+                }
+            }
+
+            Swap(arr, storeIndex, right);
+            return storeIndex;
+        }
+
+        private void Swap(int[] arr, int a, int b)
+        {
+            int temp = arr[a];
+            arr[a] = arr[b];
+            arr[b] = temp;
+        }
+
+       
+        private double GetGaussian(int[,] vizi, double sigma)
+        {
+            double soma = 0;
+
+            int size = vizi.GetLength(0);
+
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    int valorPixel = vizi[i, j];
+                    double exponente = -(i * i + j * j) / (2 * sigma * sigma);
+                    double peso = Math.Exp(exponente) / (2 * Math.PI * sigma * sigma);
+                    soma += valorPixel * peso;
+                }
+            }
+
+            return soma;
+        }
+
+
+
         public Bitmap ConverteEscalaCinza(Bitmap imgOriginal)
         {
             int largura = imgOriginal.Width;
@@ -74,6 +275,8 @@ namespace ProcessamentoImagens
 
             return negative;
         }
+
+
 
         public Bitmap FlipIN(Bitmap imgOriginal)
         {
@@ -396,34 +599,34 @@ namespace ProcessamentoImagens
             Bitmap image2 = new Bitmap(pictureBox2.Image);
 
             if (image1 == null || image2 == null)
+            {
+                MessageBox.Show("Por favor, selecione duas imagens");
+                return;
+            }
+
+            if (image1.Width != image2.Width || image1.Height != image2.Height || image1.PixelFormat != image2.PixelFormat)
+            {
+                MessageBox.Show("As imagens precisam ter o mesmo tamanho e formato para serem somadas.");
+                return;
+            }
+
+            Bitmap imagemResultado = new Bitmap(image1.Width, image1.Height);
+
+            for (int x = 0; x < image1.Width; x++)
+            {
+                for (int y = 0; y < image1.Height; y++)
                 {
-                    MessageBox.Show("Por favor, selecione duas imagens");
-                    return;
+                    Color color1 = ((Bitmap)image1).GetPixel(x, y);
+                    Color color2 = ((Bitmap)image2).GetPixel(x, y);
+
+                    // Math.Abs para os valores não serem negativos
+                    int r = Math.Abs(color1.R - color2.R);
+                    int g = Math.Abs(color1.G - color2.G);
+                    int b = Math.Abs(color1.B - color2.B);
+
+                    imagemResultado.SetPixel(x, y, Color.FromArgb(r, g, b));
                 }
-
-                if (image1.Width != image2.Width || image1.Height != image2.Height || image1.PixelFormat != image2.PixelFormat)
-                {
-                    MessageBox.Show("As imagens precisam ter o mesmo tamanho e formato para serem somadas.");
-                    return;
-                }
-
-                Bitmap imagemResultado = new Bitmap(image1.Width, image1.Height);
-
-                for (int x = 0; x < image1.Width; x++)
-                {
-                    for (int y = 0; y < image1.Height; y++)
-                    {
-                        Color color1 = ((Bitmap)image1).GetPixel(x, y);
-                        Color color2 = ((Bitmap)image2).GetPixel(x, y);
-
-                        // Math.Abs para os valores não serem negativos
-                        int r = Math.Abs(color1.R - color2.R);
-                        int g = Math.Abs(color1.G - color2.G);
-                        int b = Math.Abs(color1.B - color2.B);
-
-                        imagemResultado.SetPixel(x, y, Color.FromArgb(r, g, b));
-                    }
-                }
+            }
 
             pictureBox3.Image = imagemResultado;
 
@@ -591,81 +794,81 @@ namespace ProcessamentoImagens
 
             // Carrega a imagem em escala de cinza
             Bitmap ImagemCinza = ConverteEscalaCinza(imgOriginal);
-  
-                
 
-                // Cria um array de 256 inteiros, correspondendo os valores da escala de cinza
-                int[] histograma = new int[256];
-                for (int i = 0; i <ImagemCinza.Width; i++)
+
+
+            // Cria um array de 256 inteiros, correspondendo os valores da escala de cinza
+            int[] histograma = new int[256];
+            for (int i = 0; i < ImagemCinza.Width; i++)
+            {
+                for (int j = 0; j < ImagemCinza.Height; j++)
                 {
-                    for (int j = 0; j <ImagemCinza.Height; j++)
-                    {
-                        // Calcula o peso da escala de cinza
-                        Color c = ImagemCinza.GetPixel(i, j);
-                        int gray = (int)(c.R * 0.299 + c.G * 0.587 + c.B * 0.114);
-                        histograma[gray]++;
-                    }
+                    // Calcula o peso da escala de cinza
+                    Color c = ImagemCinza.GetPixel(i, j);
+                    int gray = (int)(c.R * 0.299 + c.G * 0.587 + c.B * 0.114);
+                    histograma[gray]++;
                 }
-
-                // Calcula a função de distribuição acumulada (CDF) do histograma
-                int[] cdf = new int[256];
-                int sum = 0;
-                for (int i = 0; i < 256; i++)
-                {
-                    sum += histograma[i];
-                    cdf[i] = sum;
-                }
-
-                // Equaliza o histograma
-                int pixels = ImagemCinza.Width * ImagemCinza.Height;
-                for (int i = 0; i < 256; i++)
-                {
-                    cdf[i] = (int)(255 * ((float)cdf[i] / pixels));
-                }
-
-                // Cria uma nova imagem equalizada
-                Bitmap imagemEqualizada = new Bitmap(ImagemCinza.Width, ImagemCinza.Height);
-                for (int i = 0; i < ImagemCinza.Width; i++)
-                {
-                    for (int j = 0; j < ImagemCinza.Height; j++)
-                    {
-                        Color c = ImagemCinza.GetPixel(i, j);
-                        int gray = (int)(c.R * 0.299 + c.G * 0.587 + c.B * 0.114);
-                        int eqGray = cdf[gray];
-                        Color eqColor = Color.FromArgb(eqGray, eqGray, eqGray);
-                        imagemEqualizada.SetPixel(i, j, eqColor);
-                    }
-                }
-
-                pictureBox3.Image = imagemEqualizada;
-
-                // Coloca o histograma final em um vetor de 256 valores, correspondendo os valores da escala de cinza
-                int[] histogramaFinal = new int[256];
-                for (int i = 0; i < imagemEqualizada.Width; i++)
-                {
-                    for (int j = 0; j < imagemEqualizada.Height; j++)
-                    {
-                        Color c = imagemEqualizada.GetPixel(i, j);
-                        int gray = (int)(c.R * 0.299 + c.G * 0.587 + c.B * 0.114);
-                        histogramaFinal[gray]++;
-                    }
-                }
-
-                // Adiciona o gráfico do primeiro histograma
-                chart1.Series.Clear();
-                chart1.Series.Add("Imagem Inicial");
-                chart1.Series["Imagem Inicial"].ChartType = SeriesChartType.Column;
-                chart1.Series["Imagem Inicial"].Points.DataBindY(histograma);
-                chart1.ChartAreas[0].AxisY.Maximum = histograma.Max() + 10;
-
-                // Adiciona o gráfico do segundo histograma
-                chart2.Series.Clear();
-                chart2.Series.Add("Imagem Final");
-                chart2.Series["Imagem Final"].ChartType = SeriesChartType.Column;
-                chart2.Series["Imagem Final"].Points.DataBindY(histogramaFinal);
-                chart2.ChartAreas[0].AxisY.Maximum = histogramaFinal.Max() + 10;
-
             }
+
+            // Calcula a função de distribuição acumulada (CDF) do histograma
+            int[] cdf = new int[256];
+            int sum = 0;
+            for (int i = 0; i < 256; i++)
+            {
+                sum += histograma[i];
+                cdf[i] = sum;
+            }
+
+            // Equaliza o histograma
+            int pixels = ImagemCinza.Width * ImagemCinza.Height;
+            for (int i = 0; i < 256; i++)
+            {
+                cdf[i] = (int)(255 * ((float)cdf[i] / pixels));
+            }
+
+            // Cria uma nova imagem equalizada
+            Bitmap imagemEqualizada = new Bitmap(ImagemCinza.Width, ImagemCinza.Height);
+            for (int i = 0; i < ImagemCinza.Width; i++)
+            {
+                for (int j = 0; j < ImagemCinza.Height; j++)
+                {
+                    Color c = ImagemCinza.GetPixel(i, j);
+                    int gray = (int)(c.R * 0.299 + c.G * 0.587 + c.B * 0.114);
+                    int eqGray = cdf[gray];
+                    Color eqColor = Color.FromArgb(eqGray, eqGray, eqGray);
+                    imagemEqualizada.SetPixel(i, j, eqColor);
+                }
+            }
+
+            pictureBox3.Image = imagemEqualizada;
+
+            // Coloca o histograma final em um vetor de 256 valores, correspondendo os valores da escala de cinza
+            int[] histogramaFinal = new int[256];
+            for (int i = 0; i < imagemEqualizada.Width; i++)
+            {
+                for (int j = 0; j < imagemEqualizada.Height; j++)
+                {
+                    Color c = imagemEqualizada.GetPixel(i, j);
+                    int gray = (int)(c.R * 0.299 + c.G * 0.587 + c.B * 0.114);
+                    histogramaFinal[gray]++;
+                }
+            }
+
+            // Adiciona o gráfico do primeiro histograma
+            chart1.Series.Clear();
+            chart1.Series.Add("Imagem Inicial");
+            chart1.Series["Imagem Inicial"].ChartType = SeriesChartType.Column;
+            chart1.Series["Imagem Inicial"].Points.DataBindY(histograma);
+            chart1.ChartAreas[0].AxisY.Maximum = histograma.Max() + 10;
+
+            // Adiciona o gráfico do segundo histograma
+            chart2.Series.Clear();
+            chart2.Series.Add("Imagem Final");
+            chart2.Series["Imagem Final"].ChartType = SeriesChartType.Column;
+            chart2.Series["Imagem Final"].Points.DataBindY(histogramaFinal);
+            chart2.ChartAreas[0].AxisY.Maximum = histogramaFinal.Max() + 10;
+
+        }
 
         private void btAnd_Click(object sender, EventArgs e)
         {
@@ -859,9 +1062,676 @@ namespace ProcessamentoImagens
             pictureBox3.Image = imagemResultado;
         }
 
+        // Função Vizinhança Max
+        private void btvMaximo_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Nenhuma imagem informada, por favor, insira a imagem na caixa IMAGEM 1.");
+                return;
+            }
 
+            Bitmap imagemOriginal = (Bitmap)pictureBox1.Image;
+            Bitmap imagemCinza = new Bitmap(imagemOriginal.Width, imagemOriginal.Height);
+
+            // Converte a imagem original em escala de cinza
+            for (int x = 0; x < imagemOriginal.Width; x++)
+            {
+                for (int y = 0; y < imagemOriginal.Height; y++)
+                {
+                    Color color1 = imagemOriginal.GetPixel(x, y);
+                    int r = color1.R;
+                    int g = color1.G;
+                    int b = color1.B;
+                    int gray = (r + g + b) / 3;
+
+                    Color novaCor = Color.FromArgb(color1.A, gray, gray, gray);
+                    imagemCinza.SetPixel(x, y, novaCor);
+                }
+            }
+
+            // Seleciona o tamanho da vizinhança
+            int tamanhoVizinhanca = 0;
+            if (!rb3x3.Checked && !rb5x5.Checked && !rb7x7.Checked)
+            {
+                MessageBox.Show("Selecione o tamanho da vizinhança para filtrar!");
+                return;
+            }
+            if (rb3x3.Checked)
+            {
+                tamanhoVizinhanca = 3;
+            }
+            if (rb5x5.Checked)
+            {
+                tamanhoVizinhanca = 5;
+            }
+            if (rb7x7.Checked)
+            {
+                tamanhoVizinhanca = 7;
+            }
+
+            // Filtra a imagem
+            Bitmap imagemFiltrada = new Bitmap(imagemCinza.Width, imagemCinza.Height);
+
+            for (int x = 0; x < imagemCinza.Width; x++)
+            {
+                for (int y = 0; y < imagemCinza.Height; y++)
+                {
+                    // Cria um array dos pixeis percoridos e pega o tamanho da vizinhança
+                    int[,] vizinhanca = new int[tamanhoVizinhanca, tamanhoVizinhanca];
+
+                    // Percorre esse array
+                    for (int i = 0; i < tamanhoVizinhanca; i++)
+                    {
+                        for (int j = 0; j < tamanhoVizinhanca; j++)
+                        {
+                            int xIndex = x + i - tamanhoVizinhanca / 2;
+                            int yIndex = y + j - tamanhoVizinhanca / 2;
+
+                            // Trata os casos em que xIndex e yIndex estão fora dos limites da imagem
+                            if (xIndex < 0)
+                            {
+                                xIndex = 0;
+                            }
+                            if (xIndex >= imagemCinza.Width)
+                            {
+                                xIndex = imagemCinza.Width - 1;
+                            }
+                            if (yIndex < 0)
+                            {
+                                yIndex = 0;
+                            }
+                            if (yIndex >= imagemCinza.Height)
+                            {
+                                yIndex = imagemCinza.Height - 1;
+                            }
+
+                            vizinhanca[i, j] = imagemCinza.GetPixel(xIndex, yIndex).R;
+                        }
+                    }
+
+                    // Usa a função GetMaximo para pegar os valores máximos da vizinhança
+                    int maximo = GetMaximo(vizinhanca);
+
+                    // Coloca esses valores conforme é cada vizinhança
+                    imagemFiltrada.SetPixel(x, y, Color.FromArgb(maximo, maximo, maximo));
+                }
+            }
+
+            // Exibe a imagem filtrada
+            pictureBox3.Image = imagemFiltrada;
+        }
+
+        private void btvMinimo_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Nenhuma imagem informada, por favor, insira a imagem na caixa IMAGEM 1.");
+                return;
+            }
+
+            Bitmap imagemOriginal = (Bitmap)pictureBox1.Image;
+            Bitmap imagemCinza = new Bitmap(imagemOriginal.Width, imagemOriginal.Height);
+
+            // Converte a imagem original em escala de cinza
+            for (int x = 0; x < imagemOriginal.Width; x++)
+            {
+                for (int y = 0; y < imagemOriginal.Height; y++)
+                {
+                    Color color1 = imagemOriginal.GetPixel(x, y);
+                    int r = color1.R;
+                    int g = color1.G;
+                    int b = color1.B;
+                    int gray = (r + g + b) / 3;
+
+                    Color novaCor = Color.FromArgb(color1.A, gray, gray, gray);
+                    imagemCinza.SetPixel(x, y, novaCor);
+                }
+            }
+
+            // Seleciona o tamanho da vizinhança
+            int tamanhoVizinhanca = 0;
+            if (!rb3x3.Checked && !rb5x5.Checked && !rb7x7.Checked)
+            {
+                MessageBox.Show("Selecione o tamanho da vizinhança para filtrar!");
+                return;
+            }
+            if (rb3x3.Checked)
+            {
+                tamanhoVizinhanca = 3;
+            }
+            if (rb5x5.Checked)
+            {
+                tamanhoVizinhanca = 5;
+            }
+            if (rb7x7.Checked)
+            {
+                tamanhoVizinhanca = 7;
+            }
+
+            // Filtra a imagem
+            Bitmap imagemFiltrada = new Bitmap(imagemCinza.Width, imagemCinza.Height);
+
+            for (int x = 0; x < imagemCinza.Width; x++)
+            {
+                for (int y = 0; y < imagemCinza.Height; y++)
+                {
+                    // Cria um array dos pixeis percoridos e pega o tamanho da vizinhança
+                    int[,] vizinhanca = new int[tamanhoVizinhanca, tamanhoVizinhanca];
+
+                    // Percorre esse array
+                    for (int i = 0; i < tamanhoVizinhanca; i++)
+                    {
+                        for (int j = 0; j < tamanhoVizinhanca; j++)
+                        {
+                            int xIndex = x + i - tamanhoVizinhanca / 2;
+                            int yIndex = y + j - tamanhoVizinhanca / 2;
+
+                            // Trata os casos em que xIndex e yIndex estão fora dos limites da imagem
+                            if (xIndex < 0)
+                            {
+                                xIndex = 0;
+                            }
+                            if (xIndex >= imagemCinza.Width)
+                            {
+                                xIndex = imagemCinza.Width - 1;
+                            }
+                            if (yIndex < 0)
+                            {
+                                yIndex = 0;
+                            }
+                            if (yIndex >= imagemCinza.Height)
+                            {
+                                yIndex = imagemCinza.Height - 1;
+                            }
+
+                            vizinhanca[i, j] = imagemCinza.GetPixel(xIndex, yIndex).R;
+                        }
+                    }
+
+                    // Usa a função GetMinimo para pegar os valores mínimos da vizinhança
+                    int minimo = GetMinimo(vizinhanca);
+
+                    // Coloca esses valores conforme é cada vizinhança
+                    imagemFiltrada.SetPixel(x, y, Color.FromArgb(minimo, minimo, minimo));
+                }
+            }
+
+            // Exibe a imagem filtrada
+            pictureBox3.Image = imagemFiltrada;
+
+
+        }
+
+        private void btvMedia_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Nenhuma imagem informada, por favor, insira a imagem na caixa IMAGEM 1.");
+                return;
+            }
+
+            Bitmap imagemOriginal = (Bitmap)pictureBox1.Image;
+            Bitmap imagemCinza = new Bitmap(imagemOriginal.Width, imagemOriginal.Height);
+
+            // Converte a imagem original em escala de cinza
+            for (int x = 0; x < imagemOriginal.Width; x++)
+            {
+                for (int y = 0; y < imagemOriginal.Height; y++)
+                {
+                    Color color1 = imagemOriginal.GetPixel(x, y);
+                    int r = color1.R;
+                    int g = color1.G;
+                    int b = color1.B;
+                    int gray = (r + g + b) / 3;
+
+                    Color novaCor = Color.FromArgb(color1.A, gray, gray, gray);
+                    imagemCinza.SetPixel(x, y, novaCor);
+                }
+            }
+
+            // Seleciona o tamanho da vizinhança
+            int tamanhoVizinhanca = 0;
+            if (!rb3x3.Checked && !rb5x5.Checked && !rb7x7.Checked)
+            {
+                MessageBox.Show("Selecione o tamanho da vizinhança para filtrar!");
+                return;
+            }
+            if (rb3x3.Checked)
+            {
+                tamanhoVizinhanca = 3;
+            }
+            if (rb5x5.Checked)
+            {
+                tamanhoVizinhanca = 5;
+            }
+            if (rb7x7.Checked)
+            {
+                tamanhoVizinhanca = 7;
+            }
+
+            // Filtra a imagem
+            Bitmap imagemFiltrada = new Bitmap(imagemCinza.Width, imagemCinza.Height);
+
+            for (int x = 0; x < imagemCinza.Width; x++)
+            {
+                for (int y = 0; y < imagemCinza.Height; y++)
+                {
+                    // Cria um array dos pixeis percoridos e pega o tamanho da vizinhança
+                    int[,] vizinhanca = new int[tamanhoVizinhanca, tamanhoVizinhanca];
+
+                    // Percorre esse array
+                    for (int i = 0; i < tamanhoVizinhanca; i++)
+                    {
+                        for (int j = 0; j < tamanhoVizinhanca; j++)
+                        {
+                            int xIndex = x + i - tamanhoVizinhanca / 2;
+                            int yIndex = y + j - tamanhoVizinhanca / 2;
+
+                            // Trata os casos em que xIndex e yIndex estão fora dos limites da imagem
+                            if (xIndex < 0)
+                            {
+                                xIndex = 0;
+                            }
+                            if (xIndex >= imagemCinza.Width)
+                            {
+                                xIndex = imagemCinza.Width - 1;
+                            }
+                            if (yIndex < 0)
+                            {
+                                yIndex = 0;
+                            }
+                            if (yIndex >= imagemCinza.Height)
+                            {
+                                yIndex = imagemCinza.Height - 1;
+                            }
+
+                            vizinhanca[i, j] = imagemCinza.GetPixel(xIndex, yIndex).R;
+                        }
+                    }
+
+                    // Usa a função GetMedia para pegar os valores médios da vizinhança
+                    int media = GetMedia(vizinhanca);
+
+                    // Coloca esses valores conforme é cada vizinhança
+                    imagemFiltrada.SetPixel(x, y, Color.FromArgb(media, media, media));
+                }
+            }
+
+            // Exibe a imagem filtrada
+            pictureBox3.Image = imagemFiltrada;
+        }
+
+        private void btvMediana_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Nenhuma imagem informada, por favor, insira a imagem na caixa IMAGEM 1.");
+                return;
+            }
+
+            Bitmap imagemOriginal = (Bitmap)pictureBox1.Image;
+            Bitmap imagemCinza = new Bitmap(imagemOriginal.Width, imagemOriginal.Height);
+
+            // Converte a imagem original em escala de cinza
+            for (int x = 0; x < imagemOriginal.Width; x++)
+            {
+                for (int y = 0; y < imagemOriginal.Height; y++)
+                {
+                    Color color1 = imagemOriginal.GetPixel(x, y);
+                    int r = color1.R;
+                    int g = color1.G;
+                    int b = color1.B;
+                    int gray = (r + g + b) / 3;
+
+                    Color novaCor = Color.FromArgb(color1.A, gray, gray, gray);
+                    imagemCinza.SetPixel(x, y, novaCor);
+                }
+            }
+
+            // Seleciona o tamanho da vizinhança
+            int tamanhoVizinhanca = 0;
+            if (!rb3x3.Checked && !rb5x5.Checked && !rb7x7.Checked)
+            {
+                MessageBox.Show("Selecione o tamanho da vizinhança para filtrar!");
+                return;
+            }
+            if (rb3x3.Checked)
+            {
+                tamanhoVizinhanca = 3;
+            }
+            if (rb5x5.Checked)
+            {
+                tamanhoVizinhanca = 5;
+            }
+            if (rb7x7.Checked)
+            {
+                tamanhoVizinhanca = 7;
+            }
+
+            // Filtra a imagem
+            Bitmap imagemFiltrada = new Bitmap(imagemCinza.Width, imagemCinza.Height);
+
+            for (int x = 0; x < imagemCinza.Width; x++)
+            {
+                for (int y = 0; y < imagemCinza.Height; y++)
+                {
+                    // Cria um array dos pixeis percoridos e pega o tamanho da vizinhança
+                    int[,] vizinhanca = new int[tamanhoVizinhanca, tamanhoVizinhanca];
+
+                    // Percorre esse array
+                    for (int i = 0; i < tamanhoVizinhanca; i++)
+                    {
+                        for (int j = 0; j < tamanhoVizinhanca; j++)
+                        {
+                            int xIndex = x + i - tamanhoVizinhanca / 2;
+                            int yIndex = y + j - tamanhoVizinhanca / 2;
+
+                            // Trata os casos em que xIndex e yIndex estão fora dos limites da imagem
+                            if (xIndex < 0)
+                            {
+                                xIndex = 0;
+                            }
+                            if (xIndex >= imagemCinza.Width)
+                            {
+                                xIndex = imagemCinza.Width - 1;
+                            }
+                            if (yIndex < 0)
+                            {
+                                yIndex = 0;
+                            }
+                            if (yIndex >= imagemCinza.Height)
+                            {
+                                yIndex = imagemCinza.Height - 1;
+                            }
+
+                            vizinhanca[i, j] = imagemCinza.GetPixel(xIndex, yIndex).R;
+                        }
+                    }
+
+                    // Usa a função GetMediana para pegar os valores medianos da vizinhança
+                    int mediana = GetMediana(vizinhanca);
+
+                    // Coloca esses valores conforme é cada vizinhança
+                    imagemFiltrada.SetPixel(x, y, Color.FromArgb(mediana, mediana, mediana));
+                }
+            }
+
+            // Exibe a imagem filtrada
+            pictureBox3.Image = imagemFiltrada;
+        }
+
+        private void btOrdem_Click(object sender, EventArgs e)
+        {
+
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Nenhuma imagem informada, por favor, insira a imagem na caixa IMAGEM 1.");
+                return;
+            }
+
+            Bitmap imagemOriginal = (Bitmap)pictureBox1.Image;
+            Bitmap imagemCinza = new Bitmap(imagemOriginal.Width, imagemOriginal.Height);
+
+            for (int x = 0; x < imagemOriginal.Width; x++)
+            {
+                for (int y = 0; y < imagemOriginal.Height; y++)
+                {
+                    Color color1 = imagemOriginal.GetPixel(x, y);
+                    int r = color1.R;
+                    int g = color1.G;
+                    int b = color1.B;
+                    int gray = (r + g + b) / 3;
+
+                    Color novaCor = Color.FromArgb(color1.A, gray, gray, gray);
+                    imagemCinza.SetPixel(x, y, novaCor);
+                }
+            }
+
+            int tamanhoVizinhanca = 0;
+            if (!rb3x3.Checked && !rb5x5.Checked && !rb7x7.Checked)
+            {
+                MessageBox.Show("Selecione o tamanho da vizinhança para filtrar!");
+                return;
+            }
+            if (rb3x3.Checked)
+            {
+                tamanhoVizinhanca = 3;
+                nupOrdem.Maximum = 8;
+
+            }
+            if (rb5x5.Checked)
+            {
+                tamanhoVizinhanca = 5;
+                nupOrdem.Maximum = 17;
+
+            }
+            if (rb7x7.Checked)
+            {
+                tamanhoVizinhanca = 7;
+                nupOrdem.Maximum = 35;
+
+            }
+
+            Bitmap imagemFiltrada = new Bitmap(imagemCinza.Width, imagemCinza.Height);
+
+            for (int x = 0; x < imagemCinza.Width; x++)
+            {
+                for (int y = 0; y < imagemCinza.Height; y++)
+                {
+                    int[,] vizinhanca = new int[tamanhoVizinhanca, tamanhoVizinhanca];
+
+                    for (int i = 0; i < tamanhoVizinhanca; i++)
+                    {
+                        for (int j = 0; j < tamanhoVizinhanca; j++)
+                        {
+                            int xIndex = x + i - tamanhoVizinhanca / 2;
+                            int yIndex = y + j - tamanhoVizinhanca / 2;
+
+                            if (xIndex < 0)
+                            {
+                                xIndex = 0;
+                            }
+                            if (xIndex >= imagemCinza.Width)
+                            {
+                                xIndex = imagemCinza.Width - 1;
+                            }
+                            if (yIndex < 0)
+                            {
+                                yIndex = 0;
+                            }
+                            if (yIndex >= imagemCinza.Height)
+                            {
+                                yIndex = imagemCinza.Height - 1;
+                            }
+
+                            vizinhanca[i, j] = imagemCinza.GetPixel(xIndex, yIndex).R;
+                        }
+                    }
+
+                    int ordem = GetOrdem(vizinhanca);
+                    imagemFiltrada.SetPixel(x, y, Color.FromArgb(ordem, ordem, ordem));
+                }
+            }
+
+            pictureBox3.Image = imagemFiltrada;
+        }
+
+        private void btSuave_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Nenhuma imagem informada, por favor, insira a imagem na caixa IMAGEM 1.");
+                return;
+            }
+
+            Bitmap imagemOriginal = (Bitmap)pictureBox1.Image;
+            Bitmap imagemCinza = new Bitmap(imagemOriginal.Width, imagemOriginal.Height);
+
+            for (int x = 0; x < imagemOriginal.Width; x++)
+            {
+                for (int y = 0; y < imagemOriginal.Height; y++)
+                {
+                    Color color1 = imagemOriginal.GetPixel(x, y);
+                    int r = color1.R;
+                    int g = color1.G;
+                    int b = color1.B;
+                    int gray = (r + g + b) / 3;
+
+                    Color novaCor = Color.FromArgb(color1.A, gray, gray, gray);
+                    imagemCinza.SetPixel(x, y, novaCor);
+                }
+            }
+
+            int tamanhoVizinhanca = 0;
+            if (!rb3x3.Checked && !rb5x5.Checked && !rb7x7.Checked)
+            {
+                MessageBox.Show("Selecione o tamanho da vizinhança para filtrar!");
+                return;
+            }
+            if (rb3x3.Checked)
+            {
+                tamanhoVizinhanca = 3;
+
+            }
+            if (rb5x5.Checked)
+            {
+                tamanhoVizinhanca = 5;
+
+            }
+            if (rb7x7.Checked)
+            {
+                tamanhoVizinhanca = 7;
+
+            }
+
+            Bitmap imagemFiltrada = new Bitmap(imagemCinza.Width, imagemCinza.Height);
+
+            for (int x = 0; x < imagemCinza.Width; x++)
+            {
+                for (int y = 0; y < imagemCinza.Height; y++)
+                {
+                    int[,] vizinhanca = new int[tamanhoVizinhanca, tamanhoVizinhanca];
+
+                    for (int i = 0; i < tamanhoVizinhanca; i++)
+                    {
+                        for (int j = 0; j < tamanhoVizinhanca; j++)
+                        {
+                            int xIndex = x + i - tamanhoVizinhanca / 2;
+                            int yIndex = y + j - tamanhoVizinhanca / 2;
+
+                            if (xIndex < 0)
+                            {
+                                xIndex = 0;
+                            }
+                            if (xIndex >= imagemCinza.Width)
+                            {
+                                xIndex = imagemCinza.Width - 1;
+                            }
+                            if (yIndex < 0)
+                            {
+                                yIndex = 0;
+                            }
+                            if (yIndex >= imagemCinza.Height)
+                            {
+                                yIndex = imagemCinza.Height - 1;
+                            }
+
+                            vizinhanca[i, j] = imagemCinza.GetPixel(xIndex, yIndex).R;
+                        }
+                    }
+
+                    int ordem = GetSuave(vizinhanca);
+                    imagemFiltrada.SetPixel(x, y, Color.FromArgb(ordem, ordem, ordem));
+                }
+            }
+
+            pictureBox3.Image = imagemFiltrada;
+        }
+
+        private void btGaussiana_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Nenhuma imagem informada, por favor, insira a imagem na caixa IMAGEM 1.");
+                return;
+            }
+
+            Bitmap imagemOriginal = (Bitmap)pictureBox1.Image;
+            Bitmap imagemCinza = new Bitmap(imagemOriginal.Width, imagemOriginal.Height);
+
+            for (int x = 0; x < imagemOriginal.Width; x++)
+            {
+                for (int y = 0; y < imagemOriginal.Height; y++)
+                {
+                    Color color1 = imagemOriginal.GetPixel(x, y);
+                    int r = color1.R;
+                    int g = color1.G;
+                    int b = color1.B;
+                    int gray = (r + g + b) / 3;
+
+                    Color novaCor = Color.FromArgb(color1.A, gray, gray, gray);
+                    imagemCinza.SetPixel(x, y, novaCor);
+                }
+            }
+
+            int tamanhoVizinhanca = 5;
+            double sigma = (double)nupGaussiana.Value;
+            Bitmap imagemFiltrada = new Bitmap(imagemCinza.Width, imagemCinza.Height);
+
+            for (int x = 0; x < imagemCinza.Width; x++)
+            {
+                for (int y = 0; y < imagemCinza.Height; y++)
+                {
+                    int[,] vizinhanca = new int[tamanhoVizinhanca, tamanhoVizinhanca];
+
+                    for (int i = 0; i < tamanhoVizinhanca; i++)
+                    {
+                        for (int j = 0; j < tamanhoVizinhanca; j++)
+                        {
+                            int xIndex = x + i - tamanhoVizinhanca / 2;
+                            int yIndex = y + j - tamanhoVizinhanca / 2;
+
+                            if (xIndex < 0)
+                            {
+                                xIndex = 0;
+                            }
+                            if (xIndex >= imagemCinza.Width)
+                            {
+                                xIndex = imagemCinza.Width - 1;
+                            }
+                            if (yIndex < 0)
+                            {
+                                yIndex = 0;
+                            }
+                            if (yIndex >= imagemCinza.Height)
+                            {
+                                yIndex = imagemCinza.Height - 1;
+                            }
+
+                            vizinhanca[i, j] = imagemCinza.GetPixel(xIndex, yIndex).R;
+                        }
+                    }
+
+                    double gaussian = GetGaussian(vizinhanca, sigma);
+
+                    int pixelNovo = (int)Math.Round(gaussian);
+                    if (pixelNovo < 0) pixelNovo = 0;
+                    else if (pixelNovo > 255) pixelNovo = 255;
+                    Color imagemNova = Color.FromArgb(pixelNovo, pixelNovo, pixelNovo);
+                    imagemFiltrada.SetPixel(x, y, imagemNova);
+                }
+            }
+
+            pictureBox3.Image = imagemFiltrada;
+        }
     }
 }
+    
+
+
+
+
 
 
 
