@@ -28,12 +28,12 @@ namespace ProcessamentoImagens
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.CarregaImagem1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -84,16 +84,20 @@ namespace ProcessamentoImagens
             this.rb5x5 = new System.Windows.Forms.RadioButton();
             this.rb7x7 = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.nupGaussiana = new System.Windows.Forms.NumericUpDown();
+            this.btSuave = new System.Windows.Forms.Button();
             this.nupOrdem = new System.Windows.Forms.NumericUpDown();
-            this.btGaussiana = new System.Windows.Forms.Button();
             this.btOrdem = new System.Windows.Forms.Button();
+            this.btGaussiana = new System.Windows.Forms.Button();
             this.btvMediana = new System.Windows.Forms.Button();
             this.btvMedia = new System.Windows.Forms.Button();
             this.btvMinimo = new System.Windows.Forms.Button();
             this.btvMaximo = new System.Windows.Forms.Button();
-            this.btSuave = new System.Windows.Forms.Button();
-            this.nupGaussiana = new System.Windows.Forms.NumericUpDown();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.Bordas = new System.Windows.Forms.GroupBox();
+            this.btLaplaciano = new System.Windows.Forms.Button();
+            this.btSobel = new System.Windows.Forms.Button();
+            this.btPrewitt = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -107,9 +111,10 @@ namespace ProcessamentoImagens
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAlpha)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nupOrdem)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nupGaussiana)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupGaussiana)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupOrdem)).BeginInit();
+            this.Bordas.SuspendLayout();
             this.SuspendLayout();
             // 
             // CarregaImagem1
@@ -470,16 +475,16 @@ namespace ProcessamentoImagens
             // 
             // chart1
             // 
-            chartArea5.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            this.chart1.Legends.Add(legend5);
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chart1.Legends.Add(legend3);
             this.chart1.Location = new System.Drawing.Point(22, 437);
             this.chart1.Name = "chart1";
-            series5.ChartArea = "ChartArea1";
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            this.chart1.Series.Add(series5);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.chart1.Series.Add(series3);
             this.chart1.Size = new System.Drawing.Size(521, 242);
             this.chart1.TabIndex = 37;
             this.chart1.Text = "chart1";
@@ -496,16 +501,16 @@ namespace ProcessamentoImagens
             // 
             // chart2
             // 
-            chartArea6.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            this.chart2.Legends.Add(legend6);
+            chartArea4.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chart2.Legends.Add(legend4);
             this.chart2.Location = new System.Drawing.Point(625, 437);
             this.chart2.Name = "chart2";
-            series6.ChartArea = "ChartArea1";
-            series6.Legend = "Legend1";
-            series6.Name = "Series1";
-            this.chart2.Series.Add(series6);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.chart2.Series.Add(series4);
             this.chart2.Size = new System.Drawing.Size(462, 242);
             this.chart2.TabIndex = 39;
             this.chart2.Text = "chart2";
@@ -644,6 +649,45 @@ namespace ProcessamentoImagens
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Vizinhança";
             // 
+            // pictureBox4
+            // 
+            this.pictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox4.Location = new System.Drawing.Point(175, 205);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(61, 50);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox4.TabIndex = 52;
+            this.pictureBox4.TabStop = false;
+            // 
+            // nupGaussiana
+            // 
+            this.nupGaussiana.DecimalPlaces = 2;
+            this.nupGaussiana.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.nupGaussiana.Location = new System.Drawing.Point(99, 224);
+            this.nupGaussiana.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.nupGaussiana.Name = "nupGaussiana";
+            this.nupGaussiana.Size = new System.Drawing.Size(51, 20);
+            this.nupGaussiana.TabIndex = 59;
+            // 
+            // btSuave
+            // 
+            this.btSuave.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btSuave.Location = new System.Drawing.Point(18, 137);
+            this.btSuave.Name = "btSuave";
+            this.btSuave.Size = new System.Drawing.Size(173, 23);
+            this.btSuave.TabIndex = 58;
+            this.btSuave.Text = "Suavização Conservativa";
+            this.btSuave.UseVisualStyleBackColor = true;
+            this.btSuave.Click += new System.EventHandler(this.btSuave_Click);
+            // 
             // nupOrdem
             // 
             this.nupOrdem.Location = new System.Drawing.Point(99, 179);
@@ -656,16 +700,6 @@ namespace ProcessamentoImagens
             this.nupOrdem.Size = new System.Drawing.Size(51, 20);
             this.nupOrdem.TabIndex = 52;
             // 
-            // btGaussiana
-            // 
-            this.btGaussiana.Location = new System.Drawing.Point(18, 224);
-            this.btGaussiana.Name = "btGaussiana";
-            this.btGaussiana.Size = new System.Drawing.Size(75, 23);
-            this.btGaussiana.TabIndex = 57;
-            this.btGaussiana.Text = "Gaussiana";
-            this.btGaussiana.UseVisualStyleBackColor = true;
-            this.btGaussiana.Click += new System.EventHandler(this.btGaussiana_Click);
-            // 
             // btOrdem
             // 
             this.btOrdem.Location = new System.Drawing.Point(18, 179);
@@ -675,6 +709,16 @@ namespace ProcessamentoImagens
             this.btOrdem.Text = "Ordem";
             this.btOrdem.UseVisualStyleBackColor = true;
             this.btOrdem.Click += new System.EventHandler(this.btOrdem_Click);
+            // 
+            // btGaussiana
+            // 
+            this.btGaussiana.Location = new System.Drawing.Point(18, 224);
+            this.btGaussiana.Name = "btGaussiana";
+            this.btGaussiana.Size = new System.Drawing.Size(75, 23);
+            this.btGaussiana.TabIndex = 57;
+            this.btGaussiana.Text = "Gaussiana";
+            this.btGaussiana.UseVisualStyleBackColor = true;
+            this.btGaussiana.Click += new System.EventHandler(this.btGaussiana_Click);
             // 
             // btvMediana
             // 
@@ -716,50 +760,54 @@ namespace ProcessamentoImagens
             this.btvMaximo.UseVisualStyleBackColor = true;
             this.btvMaximo.Click += new System.EventHandler(this.btvMaximo_Click);
             // 
-            // btSuave
+            // Bordas
             // 
-            this.btSuave.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btSuave.Location = new System.Drawing.Point(18, 137);
-            this.btSuave.Name = "btSuave";
-            this.btSuave.Size = new System.Drawing.Size(173, 23);
-            this.btSuave.TabIndex = 58;
-            this.btSuave.Text = "Suavização Conservativa";
-            this.btSuave.UseVisualStyleBackColor = true;
-            this.btSuave.Click += new System.EventHandler(this.btSuave_Click);
+            this.Bordas.Controls.Add(this.btLaplaciano);
+            this.Bordas.Controls.Add(this.btSobel);
+            this.Bordas.Controls.Add(this.btPrewitt);
+            this.Bordas.Location = new System.Drawing.Point(692, 226);
+            this.Bordas.Name = "Bordas";
+            this.Bordas.Size = new System.Drawing.Size(200, 100);
+            this.Bordas.TabIndex = 52;
+            this.Bordas.TabStop = false;
+            this.Bordas.Text = "Bordas";
             // 
-            // nupGaussiana
+            // btLaplaciano
             // 
-            this.nupGaussiana.DecimalPlaces = 2;
-            this.nupGaussiana.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.nupGaussiana.Location = new System.Drawing.Point(99, 224);
-            this.nupGaussiana.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.nupGaussiana.Name = "nupGaussiana";
-            this.nupGaussiana.Size = new System.Drawing.Size(51, 20);
-            this.nupGaussiana.TabIndex = 59;
+            this.btLaplaciano.Location = new System.Drawing.Point(6, 59);
+            this.btLaplaciano.Name = "btLaplaciano";
+            this.btLaplaciano.Size = new System.Drawing.Size(75, 23);
+            this.btLaplaciano.TabIndex = 60;
+            this.btLaplaciano.Text = "Laplaciano";
+            this.btLaplaciano.UseVisualStyleBackColor = true;
+            this.btLaplaciano.Click += new System.EventHandler(this.btLaplaciano_Click);
             // 
-            // pictureBox4
+            // btSobel
             // 
-            this.pictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox4.Location = new System.Drawing.Point(175, 205);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(61, 50);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox4.TabIndex = 52;
-            this.pictureBox4.TabStop = false;
+            this.btSobel.Location = new System.Drawing.Point(105, 19);
+            this.btSobel.Name = "btSobel";
+            this.btSobel.Size = new System.Drawing.Size(75, 23);
+            this.btSobel.TabIndex = 60;
+            this.btSobel.Text = "Sobel";
+            this.btSobel.UseVisualStyleBackColor = true;
+            this.btSobel.Click += new System.EventHandler(this.btSobel_Click);
+            // 
+            // btPrewitt
+            // 
+            this.btPrewitt.Location = new System.Drawing.Point(6, 19);
+            this.btPrewitt.Name = "btPrewitt";
+            this.btPrewitt.Size = new System.Drawing.Size(75, 23);
+            this.btPrewitt.TabIndex = 60;
+            this.btPrewitt.Text = "Prewitt";
+            this.btPrewitt.UseVisualStyleBackColor = true;
+            this.btPrewitt.Click += new System.EventHandler(this.btPrewitt_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1365, 749);
+            this.Controls.Add(this.Bordas);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label7);
@@ -823,9 +871,10 @@ namespace ProcessamentoImagens
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAlpha)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nupOrdem)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nupGaussiana)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupGaussiana)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupOrdem)).EndInit();
+            this.Bordas.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -893,6 +942,10 @@ namespace ProcessamentoImagens
         private System.Windows.Forms.Button btSuave;
         private System.Windows.Forms.NumericUpDown nupGaussiana;
         private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.GroupBox Bordas;
+        private System.Windows.Forms.Button btLaplaciano;
+        private System.Windows.Forms.Button btSobel;
+        private System.Windows.Forms.Button btPrewitt;
     }
 }
 

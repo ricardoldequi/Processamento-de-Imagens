@@ -223,7 +223,128 @@ namespace ProcessamentoImagens
             return soma;
         }
 
+        private Bitmap Prewitt(Bitmap imagem)
+        {
+            Bitmap imagemResultado = new Bitmap(imagem.Width, imagem.Height);
 
+            int[,] kernelX = {
+        { -1, 0, 1 },
+        { -1, 0, 1 },
+        { -1, 0, 1 }
+    };
+
+            int[,] kernelY = {
+        { -1, -1, -1 },
+        { 0, 0, 0 },
+        { 1, 1, 1 }
+    };
+
+            for (int x = 1; x < imagem.Width - 1; x++)
+            {
+                for (int y = 1; y < imagem.Height - 1; y++)
+                {
+                    int gx = 0;
+                    int gy = 0;
+
+                    for (int i = -1; i <= 1; i++)
+                    {
+                        for (int j = -1; j <= 1; j++)
+                        {
+                            Color pixel = imagem.GetPixel(x + i, y + j);
+                            int intensity = (int)(pixel.R * 0.299 + pixel.G * 0.587 + pixel.B * 0.114);
+                            gx += intensity * kernelX[i + 1, j + 1];
+                            gy += intensity * kernelY[i + 1, j + 1];
+                        }
+                    }
+
+                    int magnitude = (int)Math.Sqrt(gx * gx + gy * gy);
+                    magnitude = Math.Min(255, Math.Max(0, magnitude));
+
+                    imagemResultado.SetPixel(x, y, Color.FromArgb(magnitude, magnitude, magnitude));
+                }
+            }
+
+            return imagemResultado;
+        }
+
+        private Bitmap Sobel(Bitmap imagem)
+        {
+            Bitmap imagemResultado = new Bitmap(imagem.Width, imagem.Height);
+
+            int[,] kernelX = {
+        { -1, 0, 1 },
+        { -2, 0, 2 },
+        { -1, 0, 1 }
+    };
+
+            int[,] kernelY = {
+        { -1, -2, -1 },
+        { 0, 0, 0 },
+        { 1, 2, 1 }
+    };
+
+            for (int x = 1; x < imagem.Width - 1; x++)
+            {
+                for (int y = 1; y < imagem.Height - 1; y++)
+                {
+                    int gx = 0;
+                    int gy = 0;
+
+                    for (int i = -1; i <= 1; i++)
+                    {
+                        for (int j = -1; j <= 1; j++)
+                        {
+                            Color pixel = imagem.GetPixel(x + i, y + j);
+                            int intensity = (int)(pixel.R * 0.299 + pixel.G * 0.587 + pixel.B * 0.114);
+                            gx += intensity * kernelX[i + 1, j + 1];
+                            gy += intensity * kernelY[i + 1, j + 1];
+                        }
+                    }
+
+                    int magnitude = (int)Math.Sqrt(gx * gx + gy * gy);
+                    magnitude = Math.Min(255, Math.Max(0, magnitude));
+
+                    imagemResultado.SetPixel(x, y, Color.FromArgb(magnitude, magnitude, magnitude));
+                }
+            }
+
+            return imagemResultado;
+        }
+
+        private Bitmap Laplaciano(Bitmap imagem)
+        {
+            Bitmap imagemResultado = new Bitmap(imagem.Width, imagem.Height);
+
+            int[,] kernel = {
+        { 0, -1, 0 },
+        { -1, 4, -1 },
+        { 0, -1, 0 }
+    };
+
+            for (int x = 1; x < imagem.Width - 1; x++)
+            {
+                for (int y = 1; y < imagem.Height - 1; y++)
+                {
+                    int sum = 0;
+
+                    for (int i = -1; i <= 1; i++)
+                    {
+                        for (int j = -1; j <= 1; j++)
+                        {
+                            Color pixel = imagem.GetPixel(x + i, y + j);
+                            int intensity = (int)(pixel.R * 0.299 + pixel.G * 0.587 + pixel.B * 0.114);
+                            sum += intensity * kernel[i + 1, j + 1];
+                        }
+                    }
+
+                    int magnitude = Math.Min(255, Math.Max(0, sum));
+
+                    imagemResultado.SetPixel(x, y, Color.FromArgb(magnitude, magnitude, magnitude));
+                }
+            }
+
+            return imagemResultado;
+        }
 
         public Bitmap ConverteEscalaCinza(Bitmap imgOriginal)
         {
@@ -1725,7 +1846,50 @@ namespace ProcessamentoImagens
 
             pictureBox3.Image = imagemFiltrada;
         }
+
+        private void btPrewitt_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Nenhuma imagem informada, por favor, insira a imagem na caixa IMAGEM 1.");
+                return;
+            }
+
+            Bitmap imgOriginal = new Bitmap(pictureBox1.Image);
+            Bitmap imagemComBordas = Prewitt(imgOriginal);
+
+            pictureBox3.Image = imagemComBordas;
+        }
+
+        private void btSobel_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Nenhuma imagem informada, por favor, insira a imagem na caixa IMAGEM 1.");
+                return;
+            }
+
+            Bitmap imgOriginal = new Bitmap(pictureBox1.Image);
+            Bitmap imagemComBordas = Sobel(imgOriginal);
+
+            pictureBox3.Image = imagemComBordas;
+        }
+
+        private void btLaplaciano_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Nenhuma imagem informada, por favor, insira a imagem na caixa IMAGEM 1.");
+                return;
+            }
+
+            Bitmap imgOriginal = new Bitmap(pictureBox1.Image);
+            Bitmap imagemComBordas = Laplaciano(imgOriginal);
+
+            pictureBox3.Image = imagemComBordas;
+        }
     }
+    
 }
     
 
