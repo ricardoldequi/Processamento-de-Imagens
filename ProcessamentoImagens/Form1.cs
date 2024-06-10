@@ -202,25 +202,32 @@ namespace ProcessamentoImagens
             arr[b] = temp;
         }
 
-       
-        private double GetGaussian(int[,] vizi, double sigma)
+
+        private double[,] GenerateGaussianKernel(int tamanho, double sigma)
         {
+            double[,] kernel = new double[tamanho, tamanho];
             double soma = 0;
+            int half = tamanho / 2;
 
-            int size = vizi.GetLength(0);
-
-            for (int i = 0; i < size; i++)
+            for (int i = -half; i <= half; i++)
             {
-                for (int j = 0; j < size; j++)
+                for (int j = -half; j <= half; j++)
                 {
-                    int valorPixel = vizi[i, j];
                     double exponente = -(i * i + j * j) / (2 * sigma * sigma);
-                    double peso = Math.Exp(exponente) / (2 * Math.PI * sigma * sigma);
-                    soma += valorPixel * peso;
+                    kernel[i + half, j + half] = Math.Exp(exponente) / (2 * Math.PI * sigma * sigma);
+                    soma += kernel[i + half, j + half];
                 }
             }
 
-            return soma;
+            for (int i = 0; i < tamanho; i++)
+            {
+                for (int j = 0; j < tamanho; j++)
+                {
+                    kernel[i, j] /= soma;
+                }
+            }
+
+            return kernel;
         }
 
         private Bitmap Prewitt(Bitmap imagem)
@@ -346,6 +353,123 @@ namespace ProcessamentoImagens
             return imagemResultado;
         }
 
+        private bool[,] ObterElementoEstruturante()
+        {
+            int tamanhoVizinhanca = 3;
+            if (rb3x3.Checked)
+            {
+                tamanhoVizinhanca = 3;
+            }
+            else if (rb5x5.Checked)
+            {
+                tamanhoVizinhanca = 5;
+            }
+            else if (rb7x7.Checked)
+            {
+                tamanhoVizinhanca = 7;
+            }
+
+            bool[,] elementoEstruturante = new bool[tamanhoVizinhanca, tamanhoVizinhanca];
+            for (int i = 0; i < tamanhoVizinhanca; i++)
+            {
+                for (int j = 0; j < tamanhoVizinhanca; j++)
+                {
+                    elementoEstruturante[i, j] = true; // Elemento estruturante padrão (quadrado)
+                }
+            }
+
+            return elementoEstruturante;
+        }
+
+        private Bitmap Dilatar(Bitmap imagem, bool[,] elementoEstruturante)
+        {
+            int largura = imagem.Width;
+            int altura = imagem.Height;
+            Bitmap resultado = new Bitmap(largura, altura);
+
+            for (int x = 0; x < largura; x++)
+            {
+                for (int y = 0; y < altura; y++)
+                {
+                    int maxValor = 0;
+                    for (int i = 0; i < elementoEstruturante.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < elementoEstruturante.GetLength(1); j++)
+                        {
+                            if (elementoEstruturante[i, j])
+                            {
+                                int xIndex = x + i - elementoEstruturante.GetLength(0) / 2;
+                                int yIndex = y + j - elementoEstruturante.GetLength(1) / 2;
+
+                                if (xIndex >= 0 && xIndex < largura && yIndex >= 0 && yIndex < altura)
+                                {
+                                    maxValor = Math.Max(maxValor, imagem.GetPixel(xIndex, yIndex).R);
+                                }
+                            }
+                        }
+                    }
+                    resultado.SetPixel(x, y, Color.FromArgb(maxValor, maxValor, maxValor));
+                }
+            }
+
+            return resultado;
+        }
+
+        private Bitmap Erodir(Bitmap imagem, bool[,] elementoEstruturante)
+        {
+            int largura = imagem.Width;
+            int altura = imagem.Height;
+            Bitmap resultado = new Bitmap(largura, altura);
+
+            for (int x = 0; x < largura; x++)
+            {
+                for (int y = 0; y < altura; y++)
+                {
+                    int minValor = 255;
+                    for (int i = 0; i < elementoEstruturante.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < elementoEstruturante.GetLength(1); j++)
+                        {
+                            if (elementoEstruturante[i, j])
+                            {
+                                int xIndex = x + i - elementoEstruturante.GetLength(0) / 2;
+                                int yIndex = y + j - elementoEstruturante.GetLength(1) / 2;
+
+                                if (xIndex >= 0 && xIndex < largura && yIndex >= 0 && yIndex < altura)
+                                {
+                                    minValor = Math.Min(minValor, imagem.GetPixel(xIndex, yIndex).R);
+                                }
+                            }
+                        }
+                    }
+                    resultado.SetPixel(x, y, Color.FromArgb(minValor, minValor, minValor));
+                }
+            }
+
+            return resultado;
+        }
+
+        private Bitmap SubtrairImagem(Bitmap imagemOriginal, Bitmap imagemErodida)
+        {
+            int largura = imagemOriginal.Width;
+            int altura = imagemOriginal.Height;
+            Bitmap resultado = new Bitmap(largura, altura);
+
+            for (int x = 0; x < largura; x++)
+            {
+                for (int y = 0; y < altura; y++)
+                {
+                    int valorOriginal = imagemOriginal.GetPixel(x, y).R;
+                    int valorErodido = imagemErodida.GetPixel(x, y).R;
+                    int valorResultado = Math.Max(0, valorOriginal - valorErodido);
+
+                    resultado.SetPixel(x, y, Color.FromArgb(valorResultado, valorResultado, valorResultado));
+                }
+            }
+
+            return resultado;
+        }
+
         public Bitmap ConverteEscalaCinza(Bitmap imgOriginal)
         {
             int largura = imgOriginal.Width;
@@ -382,7 +506,7 @@ namespace ProcessamentoImagens
             // Loop pelos pixels da imagem
             for (int x = 0; x < imgOriginal.Width; x++)
             {
-                for (int y = 0; y < Height; y++)
+                for (int y = 0; y < imgOriginal.Height; y++) // Corrigido aqui
                 {
                     Color pixelColor = imgOriginal.GetPixel(x, y);
 
@@ -603,14 +727,17 @@ namespace ProcessamentoImagens
             // validar se existe imagem adicionada
             if (pictureBox1.Image != null)
             {
-
                 Bitmap imgOriginal = new Bitmap(pictureBox1.Image);
 
-                //chama a funcao de converter pra negativo
+                // chama a funcao de converter pra negativo
                 Bitmap negativeImage = ConverteNegativo(imgOriginal);
 
                 // Exibe a imagem gerada
                 pictureBox3.Image = negativeImage;
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecione uma imagem.");
             }
         }
         private void Array_Click(object sender, EventArgs e)
@@ -659,75 +786,110 @@ namespace ProcessamentoImagens
             }
         }
 
-        // Função de adição
         private void btAdicao_Click(object sender, EventArgs e)
         {
-            //busca as imagens selecionadas nas duas 
-            Bitmap image1 = new Bitmap(pictureBox1.Image);
-            Bitmap image2 = new Bitmap(pictureBox2.Image);
-
-
-            // Trata para ver se não existe imagem em um dos campos
-            if (image1 == null || image2 == null)
+            // Verifica se nenhum RadioButton está marcado
+            if (!rbPelaImagem.Checked && !rbValorFixo.Checked)
             {
-                MessageBox.Show("Por favor, selecione duas imagens");
+                MessageBox.Show("Por favor, selecione uma opção (Pela Imagem ou Valor Fixo).");
                 return;
             }
 
-            // Verifica se o tamanho e o formato de ambas imagens conhecidem 
-            if (image1.Width != image2.Width || image1.Height != image2.Height || image1.PixelFormat != image2.PixelFormat)
+            if (rbPelaImagem.Checked)
             {
-                MessageBox.Show("As imagens precisam ter o mesmo tamanho e formato para serem somadas.");
-                return;
-            }
-
-            // Cria um novo bitmap, com a largura e a altura da primeira imagem
-            Bitmap imagemResultado = new Bitmap(image1.Width, image1.Height);
-
-
-            // For para mapear todos os pixeis 
-            for (int x = 0; x < image1.Width; x++)
-            {
-                for (int y = 0; y < image1.Height; y++)
+                // Verifica se as imagens foram carregadas
+                if (pictureBox1.Image == null || pictureBox2.Image == null)
                 {
-                    //Color para pegar o valor dos pixeis R, G, B
-                    Color color1 = ((Bitmap)image1).GetPixel(x, y);
-                    Color color2 = ((Bitmap)image2).GetPixel(x, y);
-
-                    // Soma cada "camada" da matriz
-                    int r = color1.R + color2.R;
-                    int g = color1.G + color2.G;
-                    int b = color1.B + color2.B;
-
-                    // Trunca para não passar de 255
-                    r = Math.Min(r, 255);
-                    g = Math.Min(g, 255);
-                    b = Math.Min(b, 255);
-
-                    // Seta os pixeis que estão sem valor com a soma dos valores r, g, b
-                    imagemResultado.SetPixel(x, y, Color.FromArgb(r, g, b));
+                    MessageBox.Show("Por favor, selecione duas imagens.");
+                    return;
                 }
+
+                // Soma de imagens
+                Bitmap image1 = new Bitmap(pictureBox1.Image);
+                Bitmap image2 = new Bitmap(pictureBox2.Image);
+
+                if (image1.Width != image2.Width || image1.Height != image2.Height || image1.PixelFormat != image2.PixelFormat)
+                {
+                    MessageBox.Show("As imagens precisam ter o mesmo tamanho e formato para serem somadas.");
+                    return;
+                }
+
+                Bitmap imagemResultado = new Bitmap(image1.Width, image1.Height);
+
+                for (int x = 0; x < image1.Width; x++)
+                {
+                    for (int y = 0; y < image1.Height; y++)
+                    {
+                        Color color1 = image1.GetPixel(x, y);
+                        Color color2 = image2.GetPixel(x, y);
+
+                        int r = Math.Min(color1.R + color2.R, 255);
+                        int g = Math.Min(color1.G + color2.G, 255);
+                        int b = Math.Min(color1.B + color2.B, 255);
+
+                        imagemResultado.SetPixel(x, y, Color.FromArgb(r, g, b));
+                    }
+                }
+
+                pictureBox3.Image = imagemResultado;
             }
-            // Exibe a imagem no pictureBox imagem final
-            pictureBox3.Image = imagemResultado;
+            else if (rbValorFixo.Checked)
+            {
+                // Verifica se a imagem foi carregada
+                if (pictureBox1.Image == null)
+                {
+                    MessageBox.Show("Por favor, selecione uma imagem.");
+                    return;
+                }
+
+                // Soma com valor constante
+                Bitmap image1 = new Bitmap(pictureBox1.Image);
+                int valor = (int)numValorFixo.Value;
+
+                Bitmap imagemResultado = new Bitmap(image1.Width, image1.Height);
+
+                for (int x = 0; x < image1.Width; x++)
+                {
+                    for (int y = 0; y < image1.Height; y++)
+                    {
+                        Color color1 = image1.GetPixel(x, y);
+
+                        int r = Math.Min(color1.R + valor, 255);
+                        int g = Math.Min(color1.G + valor, 255);
+                        int b = Math.Min(color1.B + valor, 255);
+
+                        imagemResultado.SetPixel(x, y, Color.FromArgb(r, g, b));
+                    }
+                }
+
+                pictureBox3.Image = imagemResultado;
+            }
         }
 
         // Função de subtração
-        // Segue os mesmos passos da adição, até a parte da subtração
-        private void btSubtracao_Click(object sender, EventArgs e)
-        {
-            Bitmap image1 = new Bitmap(pictureBox1.Image);
-            Bitmap image2 = new Bitmap(pictureBox2.Image);
+            private void btSubtracao_Click(object sender, EventArgs e)
+                 {
+                // Verifica se nenhum RadioButton está marcado
+                if (!rbPelaImagem.Checked && !rbValorFixo.Checked)
+                {
+                    MessageBox.Show("Por favor, selecione uma opção (Pela Imagem ou Valor Fixo).");
+                    return;
+                }
 
-            if (image1 == null || image2 == null)
-            {
-                MessageBox.Show("Por favor, selecione duas imagens");
-                return;
-            }
+                if (rbPelaImagem.Checked)
+                {
+                    // Verifica se as imagens foram carregadas
+                    if (pictureBox1.Image == null || pictureBox2.Image == null)
+                    {
+                        MessageBox.Show("Por favor, selecione duas imagens.");
+                        return;
+                    }
+                    Bitmap image1 = new Bitmap(pictureBox1.Image);
+                    Bitmap image2 = new Bitmap(pictureBox2.Image);
 
-            if (image1.Width != image2.Width || image1.Height != image2.Height || image1.PixelFormat != image2.PixelFormat)
+                    if (image1.Width != image2.Width || image1.Height != image2.Height || image1.PixelFormat != image2.PixelFormat)
             {
-                MessageBox.Show("As imagens precisam ter o mesmo tamanho e formato para serem somadas.");
+                MessageBox.Show("As imagens precisam ter o mesmo tamanho e formato para serem subtraídas.");
                 return;
             }
 
@@ -737,20 +899,129 @@ namespace ProcessamentoImagens
             {
                 for (int y = 0; y < image1.Height; y++)
                 {
-                    Color color1 = ((Bitmap)image1).GetPixel(x, y);
-                    Color color2 = ((Bitmap)image2).GetPixel(x, y);
+                    Color color1 = image1.GetPixel(x, y);
+                    Color color2 = image2.GetPixel(x, y);
 
-                    // Math.Abs para os valores não serem negativos
-                    int r = Math.Abs(color1.R - color2.R);
-                    int g = Math.Abs(color1.G - color2.G);
-                    int b = Math.Abs(color1.B - color2.B);
+                    int r = Math.Max(color1.R - color2.R, 0);
+                    int g = Math.Max(color1.G - color2.G, 0);
+                    int b = Math.Max(color1.B - color2.B, 0);
 
                     imagemResultado.SetPixel(x, y, Color.FromArgb(r, g, b));
                 }
             }
 
             pictureBox3.Image = imagemResultado;
+        }
+        else if (rbValorFixo.Checked)
+        {
+            // Subtração com valor constante
+            Bitmap image1 = new Bitmap(pictureBox1.Image);
 
+            if (image1 == null)
+            {
+                MessageBox.Show("Por favor, selecione uma imagem");
+                return;
+            }
+
+            int valor = (int)numValorFixo.Value;
+
+            Bitmap imagemResultado = new Bitmap(image1.Width, image1.Height);
+
+            for (int x = 0; x < image1.Width; x++)
+            {
+                for (int y = 0; y < image1.Height; y++)
+                {
+                    Color color1 = image1.GetPixel(x, y);
+
+                    int r = Math.Max(color1.R - valor, 0);
+                    int g = Math.Max(color1.G - valor, 0);
+                    int b = Math.Max(color1.B - valor, 0);
+
+                    imagemResultado.SetPixel(x, y, Color.FromArgb(r, g, b));
+              }
+          }
+
+           pictureBox3.Image = imagemResultado;
+         }
+    }
+
+        private void btMultiplicacao_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Por favor, selecione uma imagem.");
+                return;
+            }
+
+            // Multiplicação com valor constante
+            Bitmap image1 = new Bitmap(pictureBox1.Image);
+            int valor = (int)numValorDM.Value;
+
+            Bitmap imagemResultado = new Bitmap(image1.Width, image1.Height);
+
+            for (int x = 0; x < image1.Width; x++)
+            {
+                for (int y = 0; y < image1.Height; y++)
+                {
+                    Color color1 = image1.GetPixel(x, y);
+
+                    int r = (int)(color1.R * valor);
+                    int g = (int)(color1.G * valor);
+                    int b = (int)(color1.B * valor);
+
+                    // Trunca para não passar de 255 e usa a equalização dos valores
+                    r = r > 255 ? 255 : r < 0 ? 0 : r;
+                    g = g > 255 ? 255 : g < 0 ? 0 : g;
+                    b = b > 255 ? 255 : b < 0 ? 0 : b;
+
+                    imagemResultado.SetPixel(x, y, Color.FromArgb(r, g, b));
+                }
+            }
+
+            pictureBox3.Image = imagemResultado;
+        }
+
+        private void btDivisao_Click(object sender, EventArgs e)
+        {
+            // Verifica se a imagem foi carregada
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Por favor, selecione uma imagem.");
+                return;
+            }
+
+            // Divisão com valor constante
+            Bitmap image1 = new Bitmap(pictureBox1.Image);
+            int valor = (int)numValorDM.Value;
+
+            if (valor == 0)
+            {
+                MessageBox.Show("O valor de divisão não pode ser zero.");
+                return;
+            }
+
+            Bitmap imagemResultado = new Bitmap(image1.Width, image1.Height);
+
+            for (int x = 0; x < image1.Width; x++)
+            {
+                for (int y = 0; y < image1.Height; y++)
+                {
+                    Color color1 = image1.GetPixel(x, y);
+
+                    int r = (int)(color1.R / valor);
+                    int g = (int)(color1.G / valor);
+                    int b = (int)(color1.B / valor);
+
+                    // Trunca para não passar de 255 e usa a equalização dos valores
+                    r = r > 255 ? 255 : r < 0 ? 0 : r;
+                    g = g > 255 ? 255 : g < 0 ? 0 : g;
+                    b = b > 255 ? 255 : b < 0 ? 0 : b;
+
+                    imagemResultado.SetPixel(x, y, Color.FromArgb(r, g, b));
+                }
+            }
+
+            pictureBox3.Image = imagemResultado;
         }
 
         private void btCortarImagem_Click(object sender, EventArgs e)
@@ -993,39 +1264,44 @@ namespace ProcessamentoImagens
 
         private void btAnd_Click(object sender, EventArgs e)
         {
-            System.Drawing.Image image1 = pictureBox1.Image;
-            System.Drawing.Image image2 = pictureBox2.Image;
-
-
-
-
-            if (pictureBox1 == null || pictureBox2 == null)
+            if (pictureBox1.Image == null || pictureBox2.Image == null)
             {
                 MessageBox.Show("Por favor, selecione duas imagens");
                 return;
             }
 
+            // Cast explícito de System.Drawing.Image para Bitmap
+            Bitmap image1 = (Bitmap)pictureBox1.Image;
+            Bitmap image2 = (Bitmap)pictureBox2.Image;
+
+            // Verifica se as imagens têm o mesmo tamanho e formato
             if (image1.Width != image2.Width || image1.Height != image2.Height || image1.PixelFormat != image2.PixelFormat)
             {
-                MessageBox.Show("As imagens precisam ter o mesmo tamanho e formato para serem somadas.");
+                MessageBox.Show("As imagens precisam ter o mesmo tamanho e formato para realizar essa operacao.");
                 return;
             }
 
+            // Cria uma nova imagem para o resultado
             Bitmap imagemResultado = new Bitmap(image1.Width, image1.Height);
 
+            // Loop pelos pixels das imagens
             for (int x = 0; x < image1.Width; x++)
             {
                 for (int y = 0; y < image1.Height; y++)
                 {
-                    Color color1 = ((Bitmap)image1).GetPixel(x, y);
-                    Color color2 = ((Bitmap)image2).GetPixel(x, y);
+                    // Pega a cor dos pixels correspondentes nas duas imagens
+                    Color color1 = image1.GetPixel(x, y);
+                    Color color2 = image2.GetPixel(x, y);
 
-                    // Operação simples, usando apenas o sinal do AND
+                    // Aplica a operação AND bit a bit nos componentes de cor
                     Color corResultado = Color.FromArgb(color1.R & color2.R, color1.G & color2.G, color1.B & color2.B);
+
+                    // Define o pixel resultante na nova imagem
                     imagemResultado.SetPixel(x, y, corResultado);
                 }
             }
 
+            // Exibe a imagem resultante no PictureBox
             pictureBox3.Image = imagemResultado;
         }
 
@@ -1041,7 +1317,7 @@ namespace ProcessamentoImagens
                 pictureBox1.Image.Height != pictureBox2.Image.Height ||
                 pictureBox1.Image.PixelFormat != pictureBox2.Image.PixelFormat)
             {
-                MessageBox.Show("As imagens precisam ter o mesmo tamanho e formato para serem somadas.");
+                MessageBox.Show("As imagens precisam ter o mesmo tamanho e formato para realizar essa operacao.");
                 return;
             }
 
@@ -1781,6 +2057,7 @@ namespace ProcessamentoImagens
             Bitmap imagemOriginal = (Bitmap)pictureBox1.Image;
             Bitmap imagemCinza = new Bitmap(imagemOriginal.Width, imagemOriginal.Height);
 
+            // Converte para escala de cinza
             for (int x = 0; x < imagemOriginal.Width; x++)
             {
                 for (int y = 0; y < imagemOriginal.Height; y++)
@@ -1798,45 +2075,33 @@ namespace ProcessamentoImagens
 
             int tamanhoVizinhanca = 5;
             double sigma = (double)nupGaussiana.Value;
+            double[,] gaussKernel = GenerateGaussianKernel(tamanhoVizinhanca, sigma);
             Bitmap imagemFiltrada = new Bitmap(imagemCinza.Width, imagemCinza.Height);
 
+            // Aplica a convolução usando a máscara Gaussiana
             for (int x = 0; x < imagemCinza.Width; x++)
             {
                 for (int y = 0; y < imagemCinza.Height; y++)
                 {
-                    int[,] vizinhanca = new int[tamanhoVizinhanca, tamanhoVizinhanca];
+                    double soma = 0;
 
-                    for (int i = 0; i < tamanhoVizinhanca; i++)
+                    for (int i = -tamanhoVizinhanca / 2; i <= tamanhoVizinhanca / 2; i++)
                     {
-                        for (int j = 0; j < tamanhoVizinhanca; j++)
+                        for (int j = -tamanhoVizinhanca / 2; j <= tamanhoVizinhanca / 2; j++)
                         {
-                            int xIndex = x + i - tamanhoVizinhanca / 2;
-                            int yIndex = y + j - tamanhoVizinhanca / 2;
+                            int xIndex = x + i;
+                            int yIndex = y + j;
 
-                            if (xIndex < 0)
-                            {
-                                xIndex = 0;
-                            }
-                            if (xIndex >= imagemCinza.Width)
-                            {
-                                xIndex = imagemCinza.Width - 1;
-                            }
-                            if (yIndex < 0)
-                            {
-                                yIndex = 0;
-                            }
-                            if (yIndex >= imagemCinza.Height)
-                            {
-                                yIndex = imagemCinza.Height - 1;
-                            }
+                            if (xIndex < 0) xIndex = 0;
+                            if (xIndex >= imagemCinza.Width) xIndex = imagemCinza.Width - 1;
+                            if (yIndex < 0) yIndex = 0;
+                            if (yIndex >= imagemCinza.Height) yIndex = imagemCinza.Height - 1;
 
-                            vizinhanca[i, j] = imagemCinza.GetPixel(xIndex, yIndex).R;
+                            soma += imagemCinza.GetPixel(xIndex, yIndex).R * gaussKernel[i + tamanhoVizinhanca / 2, j + tamanhoVizinhanca / 2];
                         }
                     }
 
-                    double gaussian = GetGaussian(vizinhanca, sigma);
-
-                    int pixelNovo = (int)Math.Round(gaussian);
+                    int pixelNovo = (int)Math.Round(soma);
                     if (pixelNovo < 0) pixelNovo = 0;
                     else if (pixelNovo > 255) pixelNovo = 255;
                     Color imagemNova = Color.FromArgb(pixelNovo, pixelNovo, pixelNovo);
@@ -1888,6 +2153,86 @@ namespace ProcessamentoImagens
 
             pictureBox3.Image = imagemComBordas;
         }
+
+        private void btDilatar_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Nenhuma imagem informada, por favor, insira a imagem na caixa IMAGEM 1.");
+                return;
+            }
+
+            Bitmap imgOriginal = new Bitmap(pictureBox1.Image);
+            bool[,] elementoEstruturante = ObterElementoEstruturante();
+            Bitmap imgDilatada = Dilatar(imgOriginal, elementoEstruturante);
+
+            pictureBox3.Image = imgDilatada;
+        }
+
+        private void btErodir_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Nenhuma imagem informada, por favor, insira a imagem na caixa IMAGEM 1.");
+                return;
+            }
+
+            Bitmap imgOriginal = new Bitmap(pictureBox1.Image);
+            bool[,] elementoEstruturante = ObterElementoEstruturante();
+            Bitmap imgErodida = Erodir(imgOriginal, elementoEstruturante);
+
+            pictureBox3.Image = imgErodida;
+        }
+
+        private void btAbertura_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Nenhuma imagem informada, por favor, insira a imagem na caixa IMAGEM 1.");
+                return;
+            }
+
+            Bitmap imgOriginal = new Bitmap(pictureBox1.Image);
+            bool[,] elementoEstruturante = ObterElementoEstruturante();
+            Bitmap imgErodida = Erodir(imgOriginal, elementoEstruturante);
+            Bitmap imgAbertura = Dilatar(imgErodida, elementoEstruturante);
+
+            pictureBox3.Image = imgAbertura;
+        }
+
+        private void btFechamento_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Nenhuma imagem informada, por favor, insira a imagem na caixa IMAGEM 1.");
+                return;
+            }
+
+            Bitmap imgOriginal = new Bitmap(pictureBox1.Image);
+            bool[,] elementoEstruturante = ObterElementoEstruturante();
+            Bitmap imgDilatada = Dilatar(imgOriginal, elementoEstruturante);
+            Bitmap imgFechamento = Erodir(imgDilatada, elementoEstruturante);
+
+            pictureBox3.Image = imgFechamento;
+        }
+
+        private void btContorno_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Nenhuma imagem informada, por favor, insira a imagem na caixa IMAGEM 1.");
+                return;
+            }
+
+            Bitmap imgOriginal = new Bitmap(pictureBox1.Image);
+            bool[,] elementoEstruturante = ObterElementoEstruturante();
+            Bitmap imgErodida = Erodir(imgOriginal, elementoEstruturante);
+            Bitmap imgContorno = SubtrairImagem(imgOriginal, imgErodida);
+
+            pictureBox3.Image = imgContorno;
+        }
+
+       
     }
     
 }

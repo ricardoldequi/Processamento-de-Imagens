@@ -64,7 +64,7 @@ namespace ProcessamentoImagens
             this.label8 = new System.Windows.Forms.Label();
             this.btlupOUT = new System.Windows.Forms.Button();
             this.btlupIN = new System.Windows.Forms.Button();
-            this.numOperacao = new System.Windows.Forms.NumericUpDown();
+            this.numValorFixo = new System.Windows.Forms.NumericUpDown();
             this.rbValorFixo = new System.Windows.Forms.RadioButton();
             this.rbPelaImagem = new System.Windows.Forms.RadioButton();
             this.rbPelaMedia = new System.Windows.Forms.RadioButton();
@@ -98,6 +98,15 @@ namespace ProcessamentoImagens
             this.btLaplaciano = new System.Windows.Forms.Button();
             this.btSobel = new System.Windows.Forms.Button();
             this.btPrewitt = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btDilatar = new System.Windows.Forms.Button();
+            this.btErodir = new System.Windows.Forms.Button();
+            this.btAbertura = new System.Windows.Forms.Button();
+            this.btFechamento = new System.Windows.Forms.Button();
+            this.btContorno = new System.Windows.Forms.Button();
+            this.btMultiplicacao = new System.Windows.Forms.Button();
+            this.btDivisao = new System.Windows.Forms.Button();
+            this.numValorDM = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -106,7 +115,7 @@ namespace ProcessamentoImagens
             ((System.ComponentModel.ISupportInitialize)(this.numLarguraRecorte)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAlturaRecorte)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLimiar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numOperacao)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numValorFixo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAlpha)).BeginInit();
@@ -115,6 +124,8 @@ namespace ProcessamentoImagens
             ((System.ComponentModel.ISupportInitialize)(this.nupGaussiana)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nupOrdem)).BeginInit();
             this.Bordas.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numValorDM)).BeginInit();
             this.SuspendLayout();
             // 
             // CarregaImagem1
@@ -224,9 +235,9 @@ namespace ProcessamentoImagens
             // 
             // btAdicao
             // 
-            this.btAdicao.Location = new System.Drawing.Point(208, 216);
+            this.btAdicao.Location = new System.Drawing.Point(181, 216);
             this.btAdicao.Name = "btAdicao";
-            this.btAdicao.Size = new System.Drawing.Size(75, 23);
+            this.btAdicao.Size = new System.Drawing.Size(83, 23);
             this.btAdicao.TabIndex = 11;
             this.btAdicao.Text = "Soma";
             this.btAdicao.UseVisualStyleBackColor = true;
@@ -234,9 +245,9 @@ namespace ProcessamentoImagens
             // 
             // btSubtracao
             // 
-            this.btSubtracao.Location = new System.Drawing.Point(208, 245);
+            this.btSubtracao.Location = new System.Drawing.Point(181, 245);
             this.btSubtracao.Name = "btSubtracao";
-            this.btSubtracao.Size = new System.Drawing.Size(75, 23);
+            this.btSubtracao.Size = new System.Drawing.Size(83, 23);
             this.btSubtracao.TabIndex = 12;
             this.btSubtracao.Text = "Subtração";
             this.btSubtracao.UseVisualStyleBackColor = true;
@@ -417,17 +428,17 @@ namespace ProcessamentoImagens
             this.btlupIN.UseVisualStyleBackColor = true;
             this.btlupIN.Click += new System.EventHandler(this.btlupIN_Click);
             // 
-            // numOperacao
+            // numValorFixo
             // 
-            this.numOperacao.Location = new System.Drawing.Point(371, 245);
-            this.numOperacao.Maximum = new decimal(new int[] {
+            this.numValorFixo.Location = new System.Drawing.Point(382, 245);
+            this.numValorFixo.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
-            this.numOperacao.Name = "numOperacao";
-            this.numOperacao.Size = new System.Drawing.Size(51, 20);
-            this.numOperacao.TabIndex = 32;
+            this.numValorFixo.Name = "numValorFixo";
+            this.numValorFixo.Size = new System.Drawing.Size(51, 20);
+            this.numValorFixo.TabIndex = 32;
             // 
             // rbValorFixo
             // 
@@ -608,7 +619,7 @@ namespace ProcessamentoImagens
             // rb5x5
             // 
             this.rb5x5.AutoSize = true;
-            this.rb5x5.Location = new System.Drawing.Point(79, 20);
+            this.rb5x5.Location = new System.Drawing.Point(180, 19);
             this.rb5x5.Name = "rb5x5";
             this.rb5x5.Size = new System.Drawing.Size(48, 17);
             this.rb5x5.TabIndex = 49;
@@ -619,7 +630,7 @@ namespace ProcessamentoImagens
             // rb7x7
             // 
             this.rb7x7.AutoSize = true;
-            this.rb7x7.Location = new System.Drawing.Point(143, 19);
+            this.rb7x7.Location = new System.Drawing.Point(318, 19);
             this.rb7x7.Name = "rb7x7";
             this.rb7x7.Size = new System.Drawing.Size(48, 17);
             this.rb7x7.TabIndex = 50;
@@ -629,6 +640,8 @@ namespace ProcessamentoImagens
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.Bordas);
+            this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Controls.Add(this.pictureBox4);
             this.groupBox1.Controls.Add(this.nupGaussiana);
             this.groupBox1.Controls.Add(this.btSuave);
@@ -644,7 +657,7 @@ namespace ProcessamentoImagens
             this.groupBox1.Controls.Add(this.rb5x5);
             this.groupBox1.Location = new System.Drawing.Point(450, 176);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(236, 255);
+            this.groupBox1.Size = new System.Drawing.Size(436, 255);
             this.groupBox1.TabIndex = 51;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Vizinhança";
@@ -652,7 +665,7 @@ namespace ProcessamentoImagens
             // pictureBox4
             // 
             this.pictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox4.Location = new System.Drawing.Point(175, 205);
+            this.pictureBox4.Location = new System.Drawing.Point(353, 115);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(61, 50);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -667,7 +680,7 @@ namespace ProcessamentoImagens
             0,
             0,
             131072});
-            this.nupGaussiana.Location = new System.Drawing.Point(99, 224);
+            this.nupGaussiana.Location = new System.Drawing.Point(277, 142);
             this.nupGaussiana.Maximum = new decimal(new int[] {
             255,
             0,
@@ -680,7 +693,7 @@ namespace ProcessamentoImagens
             // btSuave
             // 
             this.btSuave.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btSuave.Location = new System.Drawing.Point(18, 137);
+            this.btSuave.Location = new System.Drawing.Point(6, 98);
             this.btSuave.Name = "btSuave";
             this.btSuave.Size = new System.Drawing.Size(173, 23);
             this.btSuave.TabIndex = 58;
@@ -690,7 +703,7 @@ namespace ProcessamentoImagens
             // 
             // nupOrdem
             // 
-            this.nupOrdem.Location = new System.Drawing.Point(99, 179);
+            this.nupOrdem.Location = new System.Drawing.Point(277, 98);
             this.nupOrdem.Maximum = new decimal(new int[] {
             255,
             0,
@@ -702,7 +715,7 @@ namespace ProcessamentoImagens
             // 
             // btOrdem
             // 
-            this.btOrdem.Location = new System.Drawing.Point(18, 179);
+            this.btOrdem.Location = new System.Drawing.Point(196, 98);
             this.btOrdem.Name = "btOrdem";
             this.btOrdem.Size = new System.Drawing.Size(75, 23);
             this.btOrdem.TabIndex = 56;
@@ -712,7 +725,7 @@ namespace ProcessamentoImagens
             // 
             // btGaussiana
             // 
-            this.btGaussiana.Location = new System.Drawing.Point(18, 224);
+            this.btGaussiana.Location = new System.Drawing.Point(196, 139);
             this.btGaussiana.Name = "btGaussiana";
             this.btGaussiana.Size = new System.Drawing.Size(75, 23);
             this.btGaussiana.TabIndex = 57;
@@ -722,7 +735,7 @@ namespace ProcessamentoImagens
             // 
             // btvMediana
             // 
-            this.btvMediana.Location = new System.Drawing.Point(116, 89);
+            this.btvMediana.Location = new System.Drawing.Point(318, 49);
             this.btvMediana.Name = "btvMediana";
             this.btvMediana.Size = new System.Drawing.Size(75, 23);
             this.btvMediana.TabIndex = 55;
@@ -732,7 +745,7 @@ namespace ProcessamentoImagens
             // 
             // btvMedia
             // 
-            this.btvMedia.Location = new System.Drawing.Point(18, 89);
+            this.btvMedia.Location = new System.Drawing.Point(218, 49);
             this.btvMedia.Name = "btvMedia";
             this.btvMedia.Size = new System.Drawing.Size(75, 23);
             this.btvMedia.TabIndex = 54;
@@ -765,9 +778,9 @@ namespace ProcessamentoImagens
             this.Bordas.Controls.Add(this.btLaplaciano);
             this.Bordas.Controls.Add(this.btSobel);
             this.Bordas.Controls.Add(this.btPrewitt);
-            this.Bordas.Location = new System.Drawing.Point(692, 226);
+            this.Bordas.Location = new System.Drawing.Point(214, 168);
             this.Bordas.Name = "Bordas";
-            this.Bordas.Size = new System.Drawing.Size(200, 100);
+            this.Bordas.Size = new System.Drawing.Size(200, 84);
             this.Bordas.TabIndex = 52;
             this.Bordas.TabStop = false;
             this.Bordas.Text = "Bordas";
@@ -802,12 +815,110 @@ namespace ProcessamentoImagens
             this.btPrewitt.UseVisualStyleBackColor = true;
             this.btPrewitt.Click += new System.EventHandler(this.btPrewitt_Click);
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.btContorno);
+            this.groupBox2.Controls.Add(this.btFechamento);
+            this.groupBox2.Controls.Add(this.btAbertura);
+            this.groupBox2.Controls.Add(this.btErodir);
+            this.groupBox2.Controls.Add(this.btDilatar);
+            this.groupBox2.Location = new System.Drawing.Point(0, 130);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(194, 119);
+            this.groupBox2.TabIndex = 53;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Morfologia";
+            // 
+            // btDilatar
+            // 
+            this.btDilatar.Location = new System.Drawing.Point(6, 23);
+            this.btDilatar.Name = "btDilatar";
+            this.btDilatar.Size = new System.Drawing.Size(75, 23);
+            this.btDilatar.TabIndex = 61;
+            this.btDilatar.Text = "Dilatação";
+            this.btDilatar.UseVisualStyleBackColor = true;
+            this.btDilatar.Click += new System.EventHandler(this.btDilatar_Click);
+            // 
+            // btErodir
+            // 
+            this.btErodir.Location = new System.Drawing.Point(99, 23);
+            this.btErodir.Name = "btErodir";
+            this.btErodir.Size = new System.Drawing.Size(75, 23);
+            this.btErodir.TabIndex = 62;
+            this.btErodir.Text = "Erosão";
+            this.btErodir.UseVisualStyleBackColor = true;
+            this.btErodir.Click += new System.EventHandler(this.btErodir_Click);
+            // 
+            // btAbertura
+            // 
+            this.btAbertura.Location = new System.Drawing.Point(6, 52);
+            this.btAbertura.Name = "btAbertura";
+            this.btAbertura.Size = new System.Drawing.Size(75, 23);
+            this.btAbertura.TabIndex = 63;
+            this.btAbertura.Text = "Abertura";
+            this.btAbertura.UseVisualStyleBackColor = true;
+            this.btAbertura.Click += new System.EventHandler(this.btAbertura_Click);
+            // 
+            // btFechamento
+            // 
+            this.btFechamento.Location = new System.Drawing.Point(99, 52);
+            this.btFechamento.Name = "btFechamento";
+            this.btFechamento.Size = new System.Drawing.Size(75, 23);
+            this.btFechamento.TabIndex = 64;
+            this.btFechamento.Text = "Fechamento";
+            this.btFechamento.UseVisualStyleBackColor = true;
+            this.btFechamento.Click += new System.EventHandler(this.btFechamento_Click);
+            // 
+            // btContorno
+            // 
+            this.btContorno.Location = new System.Drawing.Point(50, 81);
+            this.btContorno.Name = "btContorno";
+            this.btContorno.Size = new System.Drawing.Size(75, 23);
+            this.btContorno.TabIndex = 65;
+            this.btContorno.Text = "Contorno";
+            this.btContorno.UseVisualStyleBackColor = true;
+            this.btContorno.Click += new System.EventHandler(this.btContorno_Click);
+            // 
+            // btMultiplicacao
+            // 
+            this.btMultiplicacao.Location = new System.Drawing.Point(293, 274);
+            this.btMultiplicacao.Name = "btMultiplicacao";
+            this.btMultiplicacao.Size = new System.Drawing.Size(83, 23);
+            this.btMultiplicacao.TabIndex = 52;
+            this.btMultiplicacao.Text = "Multiplicacao";
+            this.btMultiplicacao.UseVisualStyleBackColor = true;
+            this.btMultiplicacao.Click += new System.EventHandler(this.btMultiplicacao_Click);
+            // 
+            // btDivisao
+            // 
+            this.btDivisao.Location = new System.Drawing.Point(293, 303);
+            this.btDivisao.Name = "btDivisao";
+            this.btDivisao.Size = new System.Drawing.Size(83, 23);
+            this.btDivisao.TabIndex = 53;
+            this.btDivisao.Text = "Divisao";
+            this.btDivisao.UseVisualStyleBackColor = true;
+            this.btDivisao.Click += new System.EventHandler(this.btDivisao_Click);
+            // 
+            // numValorDM
+            // 
+            this.numValorDM.Location = new System.Drawing.Point(382, 288);
+            this.numValorDM.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.numValorDM.Name = "numValorDM";
+            this.numValorDM.Size = new System.Drawing.Size(51, 20);
+            this.numValorDM.TabIndex = 54;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1365, 749);
-            this.Controls.Add(this.Bordas);
+            this.Controls.Add(this.numValorDM);
+            this.Controls.Add(this.btDivisao);
+            this.Controls.Add(this.btMultiplicacao);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label7);
@@ -824,7 +935,7 @@ namespace ProcessamentoImagens
             this.Controls.Add(this.rbPelaMedia);
             this.Controls.Add(this.rbPelaImagem);
             this.Controls.Add(this.rbValorFixo);
-            this.Controls.Add(this.numOperacao);
+            this.Controls.Add(this.numValorFixo);
             this.Controls.Add(this.btlupIN);
             this.Controls.Add(this.btlupOUT);
             this.Controls.Add(this.label8);
@@ -865,7 +976,7 @@ namespace ProcessamentoImagens
             ((System.ComponentModel.ISupportInitialize)(this.numLarguraRecorte)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAlturaRecorte)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLimiar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numOperacao)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numValorFixo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAlpha)).EndInit();
@@ -875,6 +986,8 @@ namespace ProcessamentoImagens
             ((System.ComponentModel.ISupportInitialize)(this.nupGaussiana)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nupOrdem)).EndInit();
             this.Bordas.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numValorDM)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -912,7 +1025,7 @@ namespace ProcessamentoImagens
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btlupOUT;
         private System.Windows.Forms.Button btlupIN;
-        private System.Windows.Forms.NumericUpDown numOperacao;
+        private System.Windows.Forms.NumericUpDown numValorFixo;
         private System.Windows.Forms.RadioButton rbValorFixo;
         private System.Windows.Forms.RadioButton rbPelaImagem;
         private System.Windows.Forms.RadioButton rbPelaMedia;
@@ -946,6 +1059,15 @@ namespace ProcessamentoImagens
         private System.Windows.Forms.Button btLaplaciano;
         private System.Windows.Forms.Button btSobel;
         private System.Windows.Forms.Button btPrewitt;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button btDilatar;
+        private System.Windows.Forms.Button btErodir;
+        private System.Windows.Forms.Button btFechamento;
+        private System.Windows.Forms.Button btAbertura;
+        private System.Windows.Forms.Button btContorno;
+        private System.Windows.Forms.Button btMultiplicacao;
+        private System.Windows.Forms.Button btDivisao;
+        private System.Windows.Forms.NumericUpDown numValorDM;
     }
 }
 
